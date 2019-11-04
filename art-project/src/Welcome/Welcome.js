@@ -7,8 +7,11 @@ class Welcome extends Component {
     return (
       <div className="container text-center full-vh d-flex align-items-center justify-content-center flex-column">
       <div className="Welcome">
+        <p>Welcome to Art by Maria Fällström!</p>
         <p>
-          Welcome to Art by Maria Fällström!
+        <Link to="/main">
+          Enter
+        </Link>
         </p>
       </div>
       </div>
