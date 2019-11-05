@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import Welcome from "./Welcome/Welcome";
+import Topview from "./Topview/Topview";
 import './App.css';
 
 class App extends Component {
@@ -14,13 +15,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">{this.state.title}</h1>
+          
 
           {/* We rended diffrent component based on the path */}
           <Route exact path="/" component={Welcome} />
-        </header>
-      </div>
+        </div>
     );
   }
 }
