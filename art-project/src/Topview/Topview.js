@@ -20,7 +20,7 @@ class Topview extends Component {
 
   }
 
-  
+
   render() {
     return (
 
@@ -31,18 +31,20 @@ class Topview extends Component {
                     <p>About</p>
                 </div>
                 <div className="col">
-                    <h3>Art by Maria Fällström</h3>
+                    <Link to="/main">
+                      <h3>Art by Maria Fällström</h3>
+                    </Link>
                 </div>
                 <div className="col">
                 <Link to="/shoppingcart">
                     <p>Shopping cart</p>
                     </Link>
-        
+
                 </div>
-                
-                
+
+
             </div>
- 
+
     </div>
     );
   }
