@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import Welcome from "./Welcome/Welcome";
 import Topview from "./Topview/Topview";
+import Shoppingcart from "./Shoppingcart/Shoppingcart";
 import './App.css';
 
 class App extends Component {

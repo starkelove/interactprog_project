@@ -6,7 +6,22 @@
 }
 
 
-
-.App-link {
+ /* unvisited link */
+ a:link {
   color: #09d3ac;
 }
+
+/* visited link */
+a:visited {
+  color: #09d3ac;
+}
+
+/* mouse over link */
+a:hover {
+  color: #116d5a;
+}
+
+/* selected link */
+a:active {
+  color: #116d5a;
+} 
