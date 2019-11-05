@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import "./Topview.css";
+import "./Cartview.css";
 
-class Topview extends Component {
+class Cartview extends Component {
   constructor(props) {
     super(props);
 
@@ -24,28 +23,23 @@ class Topview extends Component {
   render() {
     return (
 
-     <div className="Topview">
+     <div className="Cartview">
 
             <div className="row">
                 <div className="col">
-                    <p>About</p>
+                    <p>You have these items</p>
+                    <li>Grej 1</li>
+                    <li>Grej 2</li>
                 </div>
                 <div className="col">
-                    <h3>Art by Maria Fällström</h3>
-                </div>
-                <div className="col">
-                <Link to="/shoppingcart">
-                    <p>Shopping cart</p>
-                    </Link>
-        
+                    <p>Buy it!</p>
                 </div>
                 
                 
             </div>
- 
     </div>
     );
   }
 }
 
-export default Topview;
+export default Cartview;
