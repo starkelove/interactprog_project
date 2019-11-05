@@ -5,7 +5,7 @@ import Topview from "./Topview/Topview";
 import Shoppingcart from "./Shoppingcart/Shoppingcart";
 import Details from "./Details/Details";
 import './App.css';
-import MainView from "./MainView/MainView";
+import Main from "./Main/Main";
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class App extends Component {
           <Route exact path="/" component={Welcome} />
           <Route exact path="/detail" component={Details} />
           <Route exact path="/shoppingcart" component={Shoppingcart} />
-          <Route exact path="/mainview" component={MainView}/>
+          <Route exact path="/main" component={Main}/>
         </header>
       </div>
     );
