@@ -7,7 +7,7 @@ import Items from "../Items/Items";
 class MainView extends Component {
     render() {
         return (
-            <div className={MainView}> 
+            <div className="MainView"> 
                 <Topview></Topview>
                 <Items></Items>
             </div>
