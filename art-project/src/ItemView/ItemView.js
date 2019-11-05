@@ -50,14 +50,17 @@ class ItemView extends Component {
               /*console.log("images");
               console.log(this.state.images[0].src);*/
               for(let i = 0; i < this.state.num_images; i++) {
-                itemList.push(<div className="col">
+                itemList.push(<div className="col" key={i}>
                   <React.Fragment>
+                    <Link id={i} name="selectedImage" to={"/details/"} onClick={ this.handleChangeImg }>
                     <img name="selectedImage" width="240" height="150" src= {grattis} />
+                    <p> image title </p>
+                    </Link>
+                    
                   </React.Fragment>
                 </div>) 
                   
               }
-             
               break
             default:
               itemList = <b>Failed to load data, please try again</b>;
