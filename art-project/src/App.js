@@ -21,7 +21,7 @@ class App extends Component {
         <header>
           {/* We rended diffrent component based on the path */}
           <Route exact path="/" component={Welcome} />
-          <Route exact path="/detail" component={Details} />
+          <Route exact path="/details" component={Details} />
           <Route exact path="/shoppingcart" component={Shoppingcart} />
           <Route exact path="/main" component={Main}/>
         </header>
