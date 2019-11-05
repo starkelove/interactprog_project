@@ -12,17 +12,7 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
   };
-/*
-const firebaseConfig = {
-    apiKey: "AIzaSyCPV2Zv7nyq-5xQ5BzxE6o5dQyzIptrpu8",
-    authDomain: "art-project-c8e48.firebaseapp.com",
-    databaseURL: "https://art-project-c8e48.firebaseio.com",
-    projectId: "art-project-c8e48",
-    storageBucket: "art-project-c8e48.appspot.com",
-    messagingSenderId: "1008438878371",
-    appId: "1:1008438878371:web:85f7aff916771836511f16",
-    measurementId: "G-RBHNDNZ8H5"
-  };*/
+
   // Initialize Firebase
   const app = firebase.initializeApp(firebaseConfig);
   const base = Rebase.createClass(app.database());

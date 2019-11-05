@@ -55,8 +55,7 @@ class ItemView extends Component {
                     <Link id={i} name="selectedImage" to={"/details/"} onClick={ this.handleChangeImg }>
                     <img name="selectedImage" width="240" height="150" src= {grattis} />
                     <p> image title </p>
-                    </Link>
-                    
+                    </Link> 
                   </React.Fragment>
                 </div>) 
                   
