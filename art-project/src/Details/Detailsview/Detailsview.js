@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "./Detail.css";
-import Topview from "../Topview/Topview";
+import "./Detailview.css";
+import Topview from "../../Topview/Topview";
 
-class Detail extends Component {
+class Detailview extends Component {
 
   constructor(props) {
         super(props);
@@ -53,8 +53,7 @@ class Detail extends Component {
     }
 
     return (
-      <div className="Detail container col-sm-12">
-      <Topview/>
+      <div className="Detailview col-sm-12">
         <div className="row">
             <div className="col-sm-6">
             <h1>{title}</h1>
@@ -71,4 +70,4 @@ class Detail extends Component {
   }
 }
 
-export default Detail;
+export default Detailview;
