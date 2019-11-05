@@ -6,6 +6,7 @@ import Shoppingcart from "./Shoppingcart/Shoppingcart";
 import Details from "./Details/Details";
 import './App.css';
 import MainView from "./MainView/MainView";
+import { base } from "./base";
 
 class App extends Component {
   constructor(props) {

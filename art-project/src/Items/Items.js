@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Items.css";
-import grattis from "./grattis.jpg"
+//import grattis from "./grattis.jpg"
 
 class Items extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ class Items extends Component {
               itemList = 
               <div className="col">
                 <React.Fragment>
-                  <img name="selectedImage" width="240" height="150" src= {grattis} />
+
                 </React.Fragment>
               </div>
                 
