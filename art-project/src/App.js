@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import Welcome from "./Welcome/Welcome";
 import Topview from "./Topview/Topview";
 import Shoppingcart from "./Shoppingcart/Shoppingcart";
+import Details from "./Details/Details";
 import './App.css';
 
 class App extends Component {
@@ -16,11 +17,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-          
-
+        <header>
           {/* We rended diffrent component based on the path */}
           <Route exact path="/" component={Welcome} />
-        </div>
+          <Route exact path="/detail" component={Details} />
+          <Route exact path="/shoppingcart" component={Shoppingcart} />
+        </header>
+      </div>
     );
   }
 }
