@@ -66,7 +66,7 @@ class Detailview extends Component {
             <img id="item-image" src={image}></img>
             </div>
         </div>
-        <button id="add-to-chart" className="btn btn-secondary" onClick={this.handleAdd}>Add to chart</button>
+        <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to chart</button>
       </div>
 
     );

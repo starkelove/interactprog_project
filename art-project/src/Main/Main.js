@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "./MainView.css";
+import "./Main.css";
 import Topview from "../Topview/Topview";
-import Items from "../Items/Items";
+import ItemView from "../ItemView/ItemView";
 
-class MainView extends Component {
+class Main extends Component {
     render() {
         return (
-            <div className="MainView"> 
+            <div className="Main"> 
                 <Topview></Topview>
-                <Items></Items>
+                <ItemView></ItemView>
             </div>
         );
     }
 }
 
-export default MainView;
+export default Main;

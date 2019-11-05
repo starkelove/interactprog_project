@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "./Items.css";
-//import grattis from "./grattis.jpg"
+import "./ItemView.css";
+import grattis from "./grattis.jpg";
+/*import loadImages from "./Images";*/
 
-class Items extends Component {
+class ItemView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          title: "Art by Maria Fällström"
+          /*images: [],*/
+          num_images : 3
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -21,6 +23,7 @@ class Items extends Component {
         // when data is retrieved we update the state
         // this will cause the component to re-render 
         this.setState({
+            /*images : loadImages(),*/
             status: "LOADED"
         }); 
     }
@@ -38,19 +41,26 @@ class Items extends Component {
     }
 
     render() {
-        let itemList = null;
+        let itemList = [];
         switch (this.state.status) {
             case "LOADING":
               itemList = <em>Loading...</em>;
               break;
             case "LOADED":
-              itemList = 
-              <div className="col">
-                <React.Fragment>
-
-                </React.Fragment>
-              </div>
-                
+              /*console.log("images");
+              console.log(this.state.images[0].src);*/
+              for(let i = 0; i < this.state.num_images; i++) {
+                itemList.push(<div className="col" key={i}>
+                  <React.Fragment>
+                    <Link id={i} name="selectedImage" to={"/details/"} onClick={ this.handleChangeImg }>
+                    <img name="selectedImage" width="240" height="150" src= {grattis} />
+                    <p> image title </p>
+                    </Link>
+                    
+                  </React.Fragment>
+                </div>) 
+                  
+              }
               break
             default:
               itemList = <b>Failed to load data, please try again</b>;
@@ -65,4 +75,4 @@ class Items extends Component {
     }
 }
 
-export default Items;
+export default ItemView;

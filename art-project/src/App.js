@@ -4,9 +4,10 @@ import Welcome from "./Welcome/Welcome";
 import Topview from "./Topview/Topview";
 import Shoppingcart from "./Shoppingcart/Shoppingcart";
 import Details from "./Details/Details";
+import Main from "./Main/Main";
 import './App.css';
-import MainView from "./MainView/MainView";
 import { base } from "./base";
+
 
 class App extends Component {
   constructor(props) {
@@ -22,9 +23,9 @@ class App extends Component {
         <header>
           {/* We rended diffrent component based on the path */}
           <Route exact path="/" component={Welcome} />
-          <Route exact path="/detail" component={Details} />
+          <Route exact path="/details" component={Details} />
           <Route exact path="/shoppingcart" component={Shoppingcart} />
-          <Route exact path="/mainview" component={MainView}/>
+          <Route exact path="/main" component={Main}/>
         </header>
       </div>
     );
