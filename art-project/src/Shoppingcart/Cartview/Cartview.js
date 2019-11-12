@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import "./Cartview.css";
 import { base } from "../../base";
+import PaypalButton from "./PaypalButton";
+
+const CLIENT = {
+  sandbox : process.env.PAYPAL_CLIENT_ID_SANDBOX,
+  production : process.env.PAYPAL_CLIENT_ID_PRODUCTION,
+}
+
+const ENV = process.env.NODE_ENV === 'production'
+  ? 'production'
+  : 'sandbox';
 
 class Cartview extends Component {
   constructor(props) {
@@ -15,11 +25,9 @@ class Cartview extends Component {
 
   }
 
-
   update() {
 
   }
-
   
   render() {
     //Test code for Firebase
@@ -39,6 +47,16 @@ class Cartview extends Component {
         console.log(data);
         }
       });*/
+    
+    const onSuccess = (payment) =>
+      console.log("Successful payement ", payment);
+
+    const onError = (error) => 
+      console.log("Errorneous payment OR failed to load script ", error);
+
+    const onCancel = (data) =>
+      console.log("Cancelled payment ", data);
+
     return (
 
      <div className="Cartview">
@@ -52,6 +70,16 @@ class Cartview extends Component {
                 </div>
                 <div className="col">
                 <button id="confirm-buy" className="btn btn-secondary" onClick={this.handleOrder}>Place order!</button>
+                <PaypalButton
+                  client = {CLIENT}
+                  env = {ENV}
+                  commit = {true}
+                  currency = {'USD'}
+                  total = {100}
+                  onSuccess = {onSuccess}
+                  onError = {onError}
+                  onCancel = {onCancel}
+                />
                 </div>
                 
                 
