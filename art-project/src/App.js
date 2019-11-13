@@ -5,6 +5,7 @@ import Topview from "./Topview/Topview";
 import Shoppingcart from "./Shoppingcart/Shoppingcart";
 import Details from "./Details/Details";
 import Main from "./Main/Main";
+import About from "./About/About";
 import './App.css';
 import { base } from "./base";
 
@@ -26,6 +27,7 @@ class App extends Component {
           <Route exact path="/details" component={Details} />
           <Route exact path="/shoppingcart" component={Shoppingcart} />
           <Route exact path="/main" component={Main}/>
+          <Route exact path="/about" component={About}/>
         </header>
       </div>
     );

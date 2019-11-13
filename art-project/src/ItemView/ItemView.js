@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./ItemView.css";
-import grattis from "./grattis.jpg";
+import img from "../imgs/thumb/thumb1.jpg";
 /*import loadImages from "./Images";*/
 
 class ItemView extends Component {
@@ -53,8 +53,8 @@ class ItemView extends Component {
                 itemList.push(<div className="col" key={i}>
                   <React.Fragment>
                     <Link id={i} name="selectedImage" to={"/details/"} onClick={ this.handleChangeImg }>
-                    <img name="selectedImage" width="240" height="150" src= {grattis} />
-                    <p> image title </p>
+                    <img name="selectedImage" width="240" height="320" src= {img} />
+                    <p> Linocut Thumbelina </p>
                     </Link> 
                   </React.Fragment>
                 </div>) 
