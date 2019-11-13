@@ -51,6 +51,8 @@ class Cartview extends Component {
                     <li></li>
                 </div>
                 <div className="col">
+                {/* PayPalButton based on tutorial provided at
+                https://github.com/Luehang/react-paypal-button-v2.git*/}
                 <PayPalButton
                   createOrder={(data, actions) => { 
                     return actions.order.create({
@@ -62,10 +64,10 @@ class Cartview extends Component {
                     });
                   }}
                   onSuccess = {(details) => 
-                    alert("Transaction completed by " + details.payer.name.given_name)} 
+                    alert("The transaction was completed by " + details.payer.name.given_name)} 
                   onError = {(error) => 
                     alert(error)}
-                  onCancel = {(data) => 
+                  onCancel = {() => 
                     alert("The transaction was cancelled ")
                   }
                   options={{

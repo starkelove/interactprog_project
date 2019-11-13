@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./ItemView.css";
 import img from "../imgs/thumb/thumb1.jpg";
-/*import loadImages from "./Images";*/
 
 class ItemView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          /*images: [],*/
           num_images : 3
         };
 
@@ -23,7 +21,6 @@ class ItemView extends Component {
         // when data is retrieved we update the state
         // this will cause the component to re-render 
         this.setState({
-            /*images : loadImages(),*/
             status: "LOADED"
         }); 
     }
@@ -47,8 +44,6 @@ class ItemView extends Component {
               itemList = <em>Loading...</em>;
               break;
             case "LOADED":
-              /*console.log("images");
-              console.log(this.state.images[0].src);*/
               for(let i = 0; i < this.state.num_images; i++) {
                 itemList.push(<div className="col" key={i}>
                   <React.Fragment>
