@@ -93,12 +93,12 @@ class PaypalButton extends React.Component {
                         returnUrl: data.returnUrl,
                     };
 
-                    onSuccess(payement);
+                    onSuccess(payment);
                 });
 
         return (
             <div>
-                {showButton && <paypal.Button.React
+                {showButton && <paypal.Button.driver
                 env = {env}
                 client = {commit}
                 payment = {payment}
@@ -114,3 +114,4 @@ class PaypalButton extends React.Component {
 }
 
 export default scriptLoader('https://www.paypalobjects.com/api/checkout.js')(PaypalButton);
+//export default PaypalButton
