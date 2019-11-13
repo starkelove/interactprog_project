@@ -28,7 +28,9 @@ class Topview extends Component {
 
             <div className="row">
                 <div className="col">
+                  <Link to="/about">
                     <p>About</p>
+                    </Link>
                 </div>
                 <div className="col">
                     <Link to="/main">
