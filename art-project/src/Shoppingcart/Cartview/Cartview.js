@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Cartview.css";
 import { base } from "../../base";
+import {PayPalButton} from "react-paypal-button-v2"
 
 class Cartview extends Component {
   constructor(props) {
@@ -15,11 +16,9 @@ class Cartview extends Component {
 
   }
 
-
   update() {
 
   }
-
   
   render() {
     //Test code for Firebase
@@ -39,6 +38,7 @@ class Cartview extends Component {
         console.log(data);
         }
       });*/
+    
     return (
 
      <div className="Cartview">
@@ -51,10 +51,30 @@ class Cartview extends Component {
                     <li></li>
                 </div>
                 <div className="col">
-                <button id="confirm-buy" className="btn btn-secondary" onClick={this.handleOrder}>Place order!</button>
-                </div>
-                
-                
+                <PayPalButton
+                  createOrder={(data, actions) => { 
+                    return actions.order.create({
+                      purchase_units: [{
+                        amount: {
+                          value: "0.01"
+                        }
+                      }],
+                    });
+                  }}
+                  onSuccess = {(details) => 
+                    alert("Transaction completed by " + details.payer.name.given_name)} 
+                  onError = {(error) => 
+                    alert(error)}
+                  onCancel = {(data) => 
+                    alert("The transaction was cancelled ")
+                  }
+                  options={{
+                    clientId: "sb",
+                    currency: "SEK"
+                  }}
+                  
+                />  
+                </div>   
             </div>
     </div>
     );
