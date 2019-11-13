@@ -58,13 +58,24 @@ class Cartview extends Component {
                     return actions.order.create({
                       purchase_units: [{
                         amount: {
-                          value: "0.01"
+                          value: "100"
                         }
                       }],
                     });
                   }}
-                  onSuccess = {(details) => 
-                    alert("The transaction was completed by " + details.payer.name.given_name)} 
+                  onApprove = {(data, actions) => {
+                    return actions.order.capture().then(function(details) {
+                      alert("The transaction was completed by " + details.payer.name.given_name);
+                      return fetch("/paypal-transaction-complete", {
+                        method: "post",
+                        body: JSON.stringify({
+                          orderID: data.orderID
+                        })
+                      });
+                    });
+                  }}
+                  // onSuccess = {(details) => 
+                  //   alert("The transaction was completed by " + details.payer.name.given_name)} 
                   onError = {(error) => 
                     alert(error)}
                   onCancel = {() => 
