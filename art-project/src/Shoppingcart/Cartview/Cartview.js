@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import "./Cartview.css";
 import { base } from "../../base";
-import PaypalButton from "./PaypalButton";
+//import PaypalButton from "./PaypalButton";
+import {PayPalButton} from "react-paypal-button-v2"
 
-const CLIENT = {
+/* const CLIENT = {
   sandbox : process.env.PAYPAL_CLIENT_ID_SANDBOX,
   production : process.env.PAYPAL_CLIENT_ID_PRODUCTION,
 }
@@ -11,7 +12,7 @@ const CLIENT = {
 const ENV = process.env.NODE_ENV === 'production'
   ? 'production'
   : 'sandbox';
-
+ */
 class Cartview extends Component {
   constructor(props) {
     super(props);
@@ -48,14 +49,14 @@ class Cartview extends Component {
         }
       });*/
     
-    const onSuccess = (payment) =>
+    /* const onSuccess = (payment) =>
       console.log("Successful payement ", payment);
 
     const onError = (error) => 
       console.log("Errorneous payment OR failed to load script ", error);
 
     const onCancel = (data) =>
-      console.log("Cancelled payment ", data);
+      console.log("Cancelled payment ", data); */
 
     return (
 
@@ -69,8 +70,26 @@ class Cartview extends Component {
                     <li></li>
                 </div>
                 <div className="col">
-                <button id="confirm-buy" className="btn btn-secondary" onClick={this.handleOrder}>Place order!</button>
-                <PaypalButton
+                <PayPalButton
+                  amount="0.01"
+                  onSuccess = {(details) => 
+                    alert("Transaction completed by " + details.payer.name.given_name)}
+                  /* onSuccess = {(details, data) => {
+                    alert("Transaction completed by " + details.payer.name.given_name);
+
+                    return fetch("/paypal-transaction-complete", {
+                      method: "post",
+                      body: JSON.stringify({
+                        orderId: data.orderId
+                      })
+                    });
+                  }}
+                  options={{
+                    clientId: process.env.PAYPAL_CLIENT_ID_SANDBOX
+                  }} */
+                />  
+                {/* <button id="confirm-buy" className="btn btn-secondary" onClick={this.handleOrder}>Place order!</button> */}
+               {/*  <PaypalButton
                   client = {CLIENT}
                   env = {ENV}
                   commit = {true}
@@ -79,7 +98,7 @@ class Cartview extends Component {
                   onSuccess = {onSuccess}
                   onError = {onError}
                   onCancel = {onCancel}
-                />
+                /> */}
                 </div>
                 
                 
