@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Detailsview.css";
 import Topview from "../../Topview/Topview";
-import img from "../../imgs/thumb/thumb1.jpg";
+import img from "../../imgs/thumbelina/thumbelina1.jpg";
+
 
 class Detailview extends Component {
 

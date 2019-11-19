@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./ItemView.css";
-import img from "../imgs/thumb/thumb1.jpg";
+import { base } from '../base'
+import modelInstance from "../Data/Model";
+import thumbelina from "../imgs/thumbelina/thumbelina1.jpg";
+import missar from "../imgs/missar/missar1.png";
+import praguestatues from "../imgs/praguestatues/praguestatues1.png";
+
 /*import loadImages from "./Images";*/
 
 class ItemView extends Component {
@@ -9,7 +14,8 @@ class ItemView extends Component {
         super(props);
         this.state = {
           /*images: [],*/
-          num_images : 3
+          num_images : 3,
+          products: []
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -21,11 +27,25 @@ class ItemView extends Component {
     // that's a good place to call the API and get the data
     componentDidMount() {
         // when data is retrieved we update the state
-        // this will cause the component to re-render 
+        // this will cause the component to re-render
+        modelInstance
+        .getAllItems()
+        .then(results => {
+          this.setState({
+            status: "LOADED",
+            products: results,
+          });
+        })
+        .catch(() => {
+          this.setState({
+            status: "ERROR"
+          });
+        }); 
+        /*
         this.setState({
             /*images : loadImages(),*/
-            status: "LOADED"
-        }); 
+          /*  status: "LOADED"
+        });*/ 
     }
 
     handleChange({ target }) {
@@ -42,6 +62,8 @@ class ItemView extends Component {
 
     render() {
         let itemList = [];
+       // let itemList = modelInstance.getAllItems();
+       // console.log(this.state.products);
         switch (this.state.status) {
             case "LOADING":
               itemList = <em>Loading...</em>;
@@ -49,12 +71,19 @@ class ItemView extends Component {
             case "LOADED":
               /*console.log("images");
               console.log(this.state.images[0].src);*/
+              let products = this.state.products;
+              console.log(products[0].name);
+              
               for(let i = 0; i < this.state.num_images; i++) {
+                let name = products[i].name;
+                let id = products[i].id;
+                console.log(link + id + "/" + id + "1.jpg");
+                console.log(id);
                 itemList.push(<div className="col" key={i}>
                   <React.Fragment>
-                    <Link id={i} name="selectedImage" to={"/details/"} onClick={ this.handleChangeImg }>
-                    <img name="selectedImage" width="240" height="320" src= {img} />
-                    <p> Linocut Thumbelina </p>
+                    <Link id={i} name="selectedImage" to={"/details/"+ id} onClick={ this.handleChangeImg }>
+                    <img name="selectedImage" width="240" height="320" src= {thumbelina} />
+                    <p> {name} </p>
                     </Link> 
                   </React.Fragment>
                 </div>) 
@@ -62,7 +91,7 @@ class ItemView extends Component {
               }
               break
             default:
-              itemList = <b>Failed to load data, please try again</b>;
+              itemList = [];
               break;
         }
 
@@ -74,4 +103,5 @@ class ItemView extends Component {
     }
 }
 
+const link = "../imgs/";
 export default ItemView;

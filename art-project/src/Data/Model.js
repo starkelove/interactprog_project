@@ -1,8 +1,7 @@
-import base from "../base.js";
+import { base } from '../base'
 
 class Model {
   constructor() {
-    super();
     this._observers = [];
     this._currentItem = null;
     this._items = [];
@@ -31,8 +30,21 @@ class Model {
     return this._currentItem;
   }
 
-  getAllItems() {
+  async getAllItems() {
     // Idk, go through database and fetch all items and add to this._items
+    let result = await base.fetch('products', {
+      context: this,
+      asArray: true
+    }).then(data => {
+      return data;
+    }).catch(error => {
+      //handle error
+    })
+
+    this.items = await result;
+    console.log(this.items);
+
+    return this.items;
   }
 
   getItem(Item) {

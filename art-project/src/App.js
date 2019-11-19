@@ -6,6 +6,7 @@ import Shoppingcart from "./Shoppingcart/Shoppingcart";
 import Details from "./Details/Details";
 import Main from "./Main/Main";
 import About from "./About/About";
+import modelInstance from "./Data/Model";
 import './App.css';
 import { base } from "./base";
 
@@ -24,9 +25,18 @@ class App extends Component {
         <header>
           {/* We rended diffrent component based on the path */}
           <Route exact path="/" component={Welcome} />
-          <Route exact path="/details" component={Details} />
-          <Route exact path="/shoppingcart" component={Shoppingcart} />
-          <Route exact path="/main" component={Main}/>
+          <Route
+            path="/details"
+            render={() => <Details model={modelInstance}/>}
+          />
+          <Route
+            path="/shoppingcart"
+            render={() => <Shoppingcart model={modelInstance}/>}
+          />
+          <Route
+            path="/main"
+            render={() => <Main model={modelInstance}/>}
+          />
           <Route exact path="/about" component={About}/>
         </header>
       </div>
