@@ -78,11 +78,11 @@ class Detailview extends Component {
       <div className="Detailview">
         <div className="row justify-content-center">
             <div className="col-sm-4">
-            <h1>{title}</h1>
-            <p>{description}</p>
+              <h1>{title}</h1>
+              <p>{description}</p>
             </div>
             <div className="col-sm-4">
-            <img id="item-image" src={image}></img>
+              <img id="item-image" src={image}></img>
             </div>
         </div>
         <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button>
