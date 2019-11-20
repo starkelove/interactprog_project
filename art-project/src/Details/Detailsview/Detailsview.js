@@ -53,6 +53,7 @@ class Detailview extends Component {
       this.setState({
         status: "LOADED",
         item: result,
+        image: img,
       });
       console.log("Here is result");
       console.log(this.state.item);
@@ -61,17 +62,6 @@ class Detailview extends Component {
       this.setState({
         status: "ERROR"
       });
-    });
-
-    // when data is retrieved we update the state
-    // this will cause the component to re-render
-
-     // add observer
-    this.setState({
-      status: "LOADED",
-      title: "Linocut Thumbelina",
-      description: "As a kid I had a pillowcase with a print of a wild grown summers field. It had tall grass, dandelions, lily of the valley and it made me feel like I was so small I could live under the flowers. When I had a daughter I wanted to give her something similar, so I created this Thumbelina-inspired linocut to inspire dreams of adventure and safety.",
-      image: img
     });
   }
 
@@ -84,7 +74,9 @@ class Detailview extends Component {
     // create variables
     let title = "";
     let description = "";
+    let price = "";
     let image = "";
+   
 
     switch(this.state.status) {
       case "LOADING":
@@ -92,8 +84,9 @@ class Detailview extends Component {
         break;
 
       case "LOADED":
-        title = this.state.title;
-        description = this.state.description;
+        title = this.state.item.name;
+        description = this.state.item.description;
+        price = this.state.item.price;
         image = this.state.image;
         break;
 
@@ -113,9 +106,14 @@ class Detailview extends Component {
             </div>
             <div className="col-sm-4">
               <img id="item-image" src={image}></img>
+              <div id="price">
+                <p> {price} SEK</p>
+              </div>
             </div>
         </div>
         <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button>
+          
+        
       </div>
 
     );
