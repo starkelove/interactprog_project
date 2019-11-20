@@ -64,28 +64,17 @@ class ItemView extends Component {
 
     render() {
         let itemList = [];
-        let imageSrc = imageHandler.getImage("thumbelina");
-        console.log(imageSrc);
-        /*const ref = firebase.storage().ref('gs://art-project-c8e48.appspot.com/missar/missar1.png');
-        const url = await ref.getDownloadUrl();
-        print(url);*/
-       // let itemList = modelInstance.getAllItems();
-       // console.log(this.state.products);
         switch (this.state.status) {
             case "LOADING":
               itemList = <em>Loading...</em>;
               break;
             case "LOADED":
-              /*console.log("images");
-              console.log(this.state.images[0].src);*/
               let products = this.state.products;
-              console.log(products[0].name);
               
               for(let i = 0; i < this.state.num_images; i++) {
                 let name = products[i].name;
                 let id = products[i].id;
-                console.log(link + id + "/" + id + "1.jpg");
-                console.log(id);
+                let imageSrc = products[i].url;
                 itemList.push(<div className="col" key={i}>
                   <React.Fragment>
                     <Link id={i} name="selectedImage" to={"/details/"+ id} onClick={ this.handleChangeImg }>

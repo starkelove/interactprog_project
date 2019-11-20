@@ -7,24 +7,19 @@ const storage = firebase.storage().ref()
 class Imagehandler extends Component{
 
 
-    getHelp(){
-        console.log("SEND HELP");
-    }
-    
     async getImage(image) {
         console.log(image);
         let temp = `${image}`;
         let string = "thumbelina/thumbelina1.jpg";
-        console.log(string);
-        let { state } = this
-        storage.child(`${string}`).getDownloadURL().then((url) => {
-        console.log("hej anna");
+        let grej = await storage.child(`${string}`).getDownloadURL().then((url) => {
         console.log(url);
         return url;
         }).catch((error) => {
         // Handle any errors
         })
-        return await state;
+
+        let apan = await grej;
+        return apan;
     }
 }
 
