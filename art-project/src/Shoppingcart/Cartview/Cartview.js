@@ -52,7 +52,7 @@ class Cartview extends Component {
                 </div>
                 <div className="col">
                 {/* PayPalButton based on tutorial provided at
-                https://github.com/Luehang/react-paypal-button-v2.git*/}
+                https://github.com/Luehang/react-paypal-button-v2.git */}
                 <PayPalButton
                   createOrder={(data, actions) => { 
                     return actions.order.create({
