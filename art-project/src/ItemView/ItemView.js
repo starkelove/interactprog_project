@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import "./ItemView.css";
 import { base } from '../base'
 import modelInstance from "../Data/Model";
+import imageHandler from "../Data/Imagehandler";
 import thumbelina from "../imgs/thumbelina/thumbelina1.jpg";
 import missar from "../imgs/missar/missar1.png";
 import praguestatues from "../imgs/praguestatues/praguestatues1.png";
+import model from "../Data/Model";
 
 /*import loadImages from "./Images";*/
 
@@ -62,6 +64,11 @@ class ItemView extends Component {
 
     render() {
         let itemList = [];
+        imageHandler.getHelp();
+        imageHandler.getImage("thumbelina");
+        /*const ref = firebase.storage().ref('gs://art-project-c8e48.appspot.com/missar/missar1.png');
+        const url = await ref.getDownloadUrl();
+        print(url);*/
        // let itemList = modelInstance.getAllItems();
        // console.log(this.state.products);
         switch (this.state.status) {
