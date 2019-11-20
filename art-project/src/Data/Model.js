@@ -4,7 +4,7 @@ class Model {
   constructor() {
     this._observers = [];
     this._items = [];
-    this._cart = [];
+    this._cart = {};
   }
 
   addObserver(observer) {
@@ -27,19 +27,26 @@ class Model {
     }
 
 }
+  add(Item) {
+    if(Item.id in this._cart) {
+      this._cart[Item.id].amount++;
+    }
+    else {
+      this._cart[Item.id] = {item: Item, amount: 1};
+    }
+  }
+
   addToCart(Item) {
-    console.log("addToCart");
     this.assert(Item != undefined);
     let approved = this.enoughInStorage(Item);
     if(approved) {
-      console.log("is okay to buy " + Item.id);
       base.update(`products/${Item.id}`, {
         data: {
         quant: Item.quant - 1
         }
       }
       ).then(() => {
-        this._cart.push(Item);
+        this.add(Item);
         console.log(this._cart);
       }).catch(err => {
         console.log("error");
@@ -65,8 +72,6 @@ class Model {
   }
 
   async getItem(id) {
-    console.log("getItem");
-    console.log(id);
     let result = await base.fetch(`products/${id}`, {
       context: this,
       asArray: false
