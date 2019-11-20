@@ -3,8 +3,8 @@ import { base } from '../base'
 class Model {
   constructor() {
     this._observers = [];
-    this._currentItem = null;
     this._items = [];
+    this._cart = [];
   }
 
   addObserver(observer) {
@@ -21,13 +21,30 @@ class Model {
     }
   }
 
-  // Item or id or something else as input here?
-  setCurrentItem(Item) {
-    this._currentItem = Item;
-  }
+  enoughInStorage(Item) {
+    if(Item.quant > 0) {
+      return true;
+    }
 
-  getCurrentItem() {
-    return this._currentItem;
+}
+  addToCart(Item) {
+    console.log("addToCart");
+    this.assert(Item != undefined);
+    let approved = this.enoughInStorage(Item);
+    if(approved) {
+      console.log("is okay to buy " + Item.id);
+      base.update(`products/${Item.id}`, {
+        data: {
+        quant: Item.quant - 1
+        }
+      }
+      ).then(() => {
+        this._cart.push(Item);
+        console.log(this._cart);
+      }).catch(err => {
+        console.log("error");
+      });
+    }
   }
 
   async getAllItems() {
@@ -42,13 +59,23 @@ class Model {
     })
 
     this.items = await result;
-    console.log(this.items);
+  //  console.log(this.items);
 
     return this.items;
   }
 
-  getItem(Item) {
-    // use this._items to get Item
+  async getItem(id) {
+    console.log("getItem");
+    console.log(id);
+    let result = await base.fetch(`products/${id}`, {
+      context: this,
+      asArray: false
+    }).then(data => {
+      return data;
+    }).catch(error => {
+      //handle error
+    })
+    return result;
   }
 
 

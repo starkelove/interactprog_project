@@ -14,9 +14,7 @@ class Details extends Component {
         };
     }
 
-  handleAdd = (event) => {
-    console.log("Add to chart");
-  }
+
 
   componentWillUnmount() {
     // remove observer
