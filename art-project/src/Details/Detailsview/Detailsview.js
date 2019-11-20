@@ -112,8 +112,6 @@ class Detailview extends Component {
             </div>
         </div>
         <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button>
-          
-        
       </div>
 
     );
