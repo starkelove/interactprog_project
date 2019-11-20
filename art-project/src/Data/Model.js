@@ -4,9 +4,20 @@ class Model {
   constructor() {
     this._observers = [];
     this._items = [];
-    this._cart = {};
+    this._cart = this.setCart();
   }
 
+  setCart() {
+    console.log("setCart");
+    let cart = window.localStorage.getItem('cart');
+    console.log(cart);
+    if(cart != undefined) {
+      return JSON.parse(cart);
+    }
+    else {
+      return {};
+    }
+  }
   addObserver(observer) {
     this._observers.push(observer);
   }
@@ -29,11 +40,13 @@ class Model {
 }
   add(Item) {
     if(Item.id in this._cart) {
+      this._cart[Item.id].item = Item;
       this._cart[Item.id].amount++;
     }
     else {
       this._cart[Item.id] = {item: Item, amount: 1};
     }
+    window.localStorage.setItem('cart', JSON.stringify(this._cart));
   }
 
   addToCart(Item) {
