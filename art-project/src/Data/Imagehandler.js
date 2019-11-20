@@ -11,14 +11,20 @@ class Imagehandler extends Component{
         console.log("SEND HELP");
     }
     
-    getImage(image) {
+    async getImage(image) {
+        console.log(image);
+        let temp = `${image}`;
+        let string = "thumbelina/thumbelina1.jpg";
+        console.log(string);
         let { state } = this
-        storage.child(`${image}1.jpg`).getDownloadURL().then((url) => {
-        state[image] = url
-        this.setState(state)
+        storage.child(`${string}`).getDownloadURL().then((url) => {
+        console.log("hej anna");
+        console.log(url);
+        return url;
         }).catch((error) => {
         // Handle any errors
         })
+        return await state;
     }
 }
 

@@ -64,8 +64,8 @@ class ItemView extends Component {
 
     render() {
         let itemList = [];
-        imageHandler.getHelp();
-        imageHandler.getImage("thumbelina");
+        let imageSrc = imageHandler.getImage("thumbelina");
+        console.log(imageSrc);
         /*const ref = firebase.storage().ref('gs://art-project-c8e48.appspot.com/missar/missar1.png');
         const url = await ref.getDownloadUrl();
         print(url);*/
@@ -89,7 +89,7 @@ class ItemView extends Component {
                 itemList.push(<div className="col" key={i}>
                   <React.Fragment>
                     <Link id={i} name="selectedImage" to={"/details/"+ id} onClick={ this.handleChangeImg }>
-                    <img name="selectedImage" width="240" height="320" src= {thumbelina} />
+                    <img name="selectedImage" width="240" height="320" src= {imageSrc} />
                     <p> {name} </p>
                     </Link> 
                   </React.Fragment>
