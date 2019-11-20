@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Detailsview.css";
 import Topview from "../../Topview/Topview";
-import img from "../../imgs/thumbelina/thumbelina1.jpg";
 import model from "../../Data/Model";
 import { base } from '../../base'
 
@@ -52,8 +51,7 @@ class Detailview extends Component {
     .then(result => {
       this.setState({
         status: "LOADED",
-        item: result,
-        image: img,
+        item: result
       });
       console.log("Here is result");
       console.log(this.state.item);
@@ -87,7 +85,7 @@ class Detailview extends Component {
         title = this.state.item.name;
         description = this.state.item.description;
         price = this.state.item.price;
-        image = this.state.image;
+        image = this.state.item.url;
         break;
 
       default:
