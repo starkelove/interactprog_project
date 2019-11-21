@@ -70,21 +70,16 @@ class ItemView extends Component {
               break;
             case "LOADED":
               let products = this.state.products;
-              
-              for(let i = 0; i < this.state.num_images; i++) {
-                let name = products[i].name;
-                let id = products[i].id;
-                let imageSrc = products[i].url;
-                itemList.push(<div className="col" key={i}>
+              itemList = products.map(item => (
+                <div className="col" key={item.id}>
                   <React.Fragment>
-                    <Link id={i} name="selectedImage" to={"/details/"+ id} onClick={ this.handleChangeImg }>
-                    <img name="selectedImage" width="240" height="320" src= {imageSrc} />
-                    <p> {name} </p>
+                    <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
+                    <img name="selectedImage" width="240" height="320" src= {item.url} />
+                    <p> {item.name} </p>
                     </Link> 
                   </React.Fragment>
-                </div>) 
-                  
-              }
+                </div>
+              ));
               break
             default:
               itemList = [];
