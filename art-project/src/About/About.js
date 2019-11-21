@@ -62,7 +62,7 @@ class About extends Component {
           </div>
           <div className="col-sm-4">
               <p>
-              This is me! During the days you'll find me at the film production company Diggin Larry where I work as a motion designer. I live in Stockholm with my love Love, our daughter and our two cats. See more of what I do on my instagram account. </p>
+              This is me! During the days you'll find me at the film production company <a href="http://diggin.se/">Diggin Larry</a> where I work as a motion designer. I live in Stockholm with my love Love, our daughter and our two cats. See more of what I do on my <a href="https://www.instagram.com/mariafallstrom/">instagram account</a> and on my <a href="https://www.mariafallstrom.com/">portfolio</a>. </p>
               <p>
                 +46763067770
                 </p>
