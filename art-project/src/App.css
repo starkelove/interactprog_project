@@ -25,3 +25,8 @@ a:hover {
 a:active {
   color: #116d5a;
 } 
+
+#App .row {
+  margin-right: 0;
+  margin-left: 0;
+}
