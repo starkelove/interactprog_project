@@ -10,13 +10,17 @@ class Cartview extends Component {
     super(props);
 
     this.state = {
-      cart : model._cart
+      cart : []
     };
     
 
   }
 
   componentDidMount() {
+    this.setState({
+      cart : model._cart
+    });
+
     
   }
 
@@ -46,17 +50,19 @@ class Cartview extends Component {
         console.log(data);
         }
       });*/
-
     let cart = this.state.cart;
     let num_items = 0;
     let tot_price = 0;
-    
+
     Object.keys(cart).forEach(key => {
-      tot_price += cart[key].item.price;
-      num_items += 1;
+      num_items += cart[key].amount;
+      tot_price += cart[key].amount*cart[key].item.price;
       console.log(key);
       console.log(cart[key]);
     });
+     
+    console.log("num_items ", num_items);
+    console.log("tot_price ", tot_price);
     let description = "You are about to pay for " + num_items + " items";
     
     return (
