@@ -2,14 +2,22 @@ import React, { Component } from "react";
 import "./Cartview.css";
 import { base } from "../../base";
 import {PayPalButton} from "react-paypal-button-v2"
+import model from "../../Data/Model";
+import { isOptionalMemberExpression } from "@babel/types";
 
 class Cartview extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      cart : model._cart
+    };
+    
+
   }
 
   componentDidMount() {
+    
   }
 
   componentWillUnmount() {
@@ -38,6 +46,18 @@ class Cartview extends Component {
         console.log(data);
         }
       });*/
+
+    let cart = this.state.cart;
+    let num_items = 0;
+    let tot_price = 0;
+    
+    Object.keys(cart).forEach(key => {
+      tot_price += cart[key].item.price;
+      num_items += 1;
+      console.log(key);
+      console.log(cart[key]);
+    });
+    let description = "You are about to pay for " + num_items + " items";
     
     return (
 
@@ -56,11 +76,14 @@ class Cartview extends Component {
                 <PayPalButton
                   createOrder={(data, actions) => { 
                     return actions.order.create({
-                      purchase_units: [{
-                        amount: {
-                          value: "100"
-                        }
-                      }],
+                      "purchase_units": [{
+                          "description": description,
+                          "amount": {
+                            currency_code: "SEK",
+                            value: tot_price
+                          }
+                        },
+                        ],
                     });
                   }}
                   onApprove = {(data, actions) => {
