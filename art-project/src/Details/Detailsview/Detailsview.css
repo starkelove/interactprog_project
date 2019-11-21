@@ -8,5 +8,35 @@
 }
 
 #price {
-  margin-top: 15px;
+  margin-top: 25vh;
+  margin-bottom: auto;
+}
+
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+/*
+.image-gallery-slide img {
+  width: 100vh;
+  height: 100vh;
+}*/
+
+.image-gallery {
+  width: 50%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.image-gallery-slide img {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: cover;
+  overflow: hidden;
+  object-position: center center;
+}
+
+.fullscreen .image-gallery-slide img {
+  max-width: 75vh;
+  max-height: 100vh;
 }
