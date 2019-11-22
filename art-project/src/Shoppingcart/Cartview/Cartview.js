@@ -16,13 +16,15 @@ class Cartview extends Component {
 
   }
 
-  handleRemove = (event) => {
+  handleRemoveAll = (event) => {
     let itemId = event.target.parentNode.id;
-    model.remove(itemId);
+    model.getItem(itemId)
+    .then((item) => {
+      model.removeAll(item)
+    });
   }
 
   componentDidMount() {
-    console.log("render cartview");
     model.addObserver(this);
     this.setState({
       cart : model._cart
@@ -36,14 +38,12 @@ class Cartview extends Component {
   }
 
   update() {
-    console.log("update cartview");
     this.setState({
       cart : model._cart
     });
   }
 
   render() {
-    console.log("actually render");
     //Test code for Firebase
     /*
     var immediatelyAvailableReference = base.push('tents', {
@@ -69,13 +69,13 @@ class Cartview extends Component {
     Object.keys(cart).forEach(key => {
       num_items += cart[key].amount;
       tot_price += cart[key].amount*cart[key].item.price;
-      shoppingList.push(<div id={cart[key].item.id} className="item" key={key}>{cart[key].item.id} {cart[key].amount} <button onClick={this.handleRemove}className="remove-btn"> X </button></div>);
-      console.log(key);
-      console.log(cart[key]);
+      shoppingList.push(<div id={cart[key].item.id} className="item" key={key}>{cart[key].item.id} {cart[key].amount} <button onClick={this.handleRemoveAll}className="remove-btn"> X </button></div>);
+  //    console.log(key);
+  //    console.log(cart[key]);
     });
 
-    console.log("num_items ", num_items);
-    console.log("tot_price ", tot_price);
+  //  console.log("num_items ", num_items);
+  //  console.log("tot_price ", tot_price);
     let description = "You are about to pay for " + num_items + " items";
 
     return (
