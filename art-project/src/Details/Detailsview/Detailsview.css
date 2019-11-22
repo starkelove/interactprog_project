@@ -12,6 +12,16 @@
   margin-bottom: auto;
 }
 
+@media only screen and (max-width: 600px) {
+  #price{
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  #add-to-chart-btn {
+    margin: 25px;
+  }
+}
+
 @import "~react-image-gallery/styles/css/image-gallery.css";
 
 /*
