@@ -5,6 +5,7 @@ import Topview from "../../Topview/Topview";
 import model from "../../Data/Model";
 import { base } from '../../base'
 import ImageGallery from 'react-image-gallery';
+import FadeIn from 'react-fade-in';
 
 
 class Detailview extends Component {
@@ -99,7 +100,7 @@ class Detailview extends Component {
 
     switch(this.state.status) {
       case "LOADING":
-        title = "Loading...";
+
         break;
 
       case "LOADED":
@@ -120,6 +121,7 @@ class Detailview extends Component {
       <div className="Detailview">
         <div className="row justify-content-center">
             <div className="col-sm-4">
+              
               <h1>{title}</h1>
               <p>{description}</p>
 
@@ -127,10 +129,12 @@ class Detailview extends Component {
                 <p> {price} SEK</p>
                 <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button>
               </div>
+
             </div>
             <div className="col-sm-4">
+              <FadeIn>
               <ImageGallery items={images} />
-
+              </FadeIn>
             </div>
         </div>
 

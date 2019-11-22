@@ -8,6 +8,8 @@ import thumbelina from "../imgs/thumbelina/thumbelina1.jpg";
 import missar from "../imgs/missar/missar1.png";
 import praguestatues from "../imgs/praguestatues/praguestatues1.png";
 import model from "../Data/Model";
+import ImageFadeIn from 'react-image-fade-in';
+import FadeIn from 'react-fade-in';
 
 /*import loadImages from "./Images";*/
 
@@ -74,8 +76,12 @@ class ItemView extends Component {
                 <div className="col" key={item.id}>
                   <React.Fragment>
                     <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
-                    <img name="selectedImage" width="240" height="320" src= {item.url} />
+                    
+                    <ImageFadeIn name={item.name} id={"images"} width={240} height={320} src={item.url} opacityTransition={2}/>
+                  
+                    <FadeIn>
                     <p> {item.name} </p>
+                    </FadeIn>
                     </Link> 
                   </React.Fragment>
                 </div>
