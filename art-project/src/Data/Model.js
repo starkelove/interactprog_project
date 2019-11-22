@@ -134,6 +134,9 @@ class Model {
 
   removeFromCart(item) {
     this.assert(item != undefined);
+    if(this._cart[item.id].amount == 0) {
+      return;
+    }
     base.update(`products/${item.id}`, {
       data: {
       quant: item.quant + 1
@@ -150,7 +153,6 @@ class Model {
 
 
   async getAllItems() {
-    // Idk, go through database and fetch all items and add to this._items
     let result = await base.fetch('products', {
       context: this,
       asArray: true
@@ -161,7 +163,6 @@ class Model {
     })
 
     this.items = await result;
-  //  console.log(this.items);
 
     return this.items;
   }
