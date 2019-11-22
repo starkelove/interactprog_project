@@ -86,12 +86,11 @@ class Cartview extends Component {
       num_items += cart[key].amount;
       tot_price += cart[key].amount*cart[key].item.price;
       shoppingList.push(
-        <div id={cart[key].item.id} className="item" key={key}>{cart[key].item.id} {cart[key].amount}
-
+        <div id={cart[key].item.id} className="item" key={key}> {cart[key].item.id}
           <button onClick={this.handleRemoveAll} className="remove-btn"> X </button>
           <button onClick={this.handleIncrease} className="increase-btn"> + </button>
+          <span className="item-name">{cart[key].amount}</span>
           <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
-
         </div>
       );
   //    console.log(key);
@@ -106,14 +105,12 @@ class Cartview extends Component {
 
      <div className="Cartview">
 
-            <div className="row">
-                <div className="col cart">
+            <div>
+                <div className="cart">
                     <h3>Your Shopping Cart</h3>
-
                     {shoppingList}
-
                 </div>
-                <div className="col">
+                <div id="paypal-div">
                 {/* PayPalButton based on tutorial provided at
                 https://github.com/Luehang/react-paypal-button-v2.git */}
                 <PayPalButton
