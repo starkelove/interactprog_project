@@ -23,8 +23,6 @@ class Detailview extends Component {
     }
 
   handleAdd = () => {
-    console.log("handleAdd");
-    console.log(this.state.item);
     if(this.state.item != undefined) {
       model.addToCart(this.state.item);
     }
@@ -80,7 +78,7 @@ class Detailview extends Component {
       {
         original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/missar%2Fmissar1.png?alt=media&token=bf518a35-8e24-4d17-bf24-781e9fa32ca3',
         thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/missar%2Fmissar1.png?alt=media&token=bf518a35-8e24-4d17-bf24-781e9fa32ca3',
-    
+
       },
       {
         original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
@@ -95,7 +93,7 @@ class Detailview extends Component {
         thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
       },
     ];
-   
+
 
     switch(this.state.status) {
       case "LOADING":

@@ -27,6 +27,7 @@ class Model {
   }
 
   notifyObservers(){
+    console.log("notifyObservers");
     for(var i = 0; i < this._observers.length; i++) {
       this._observers[i].update();
     }
@@ -47,6 +48,7 @@ class Model {
       this._cart[Item.id] = {item: Item, amount: 1};
     }
     window.localStorage.setItem('cart', JSON.stringify(this._cart));
+    this.notifyObservers();
   }
 
   addToCart(Item) {
