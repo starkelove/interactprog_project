@@ -16,6 +16,22 @@ class Cartview extends Component {
 
   }
 
+  handleDecrease = (event) => {
+    let itemId = event.target.parentNode.id;
+    model.getItem(itemId)
+    .then((item) => {
+      model.removeFromCart(item)
+    });
+  }
+
+  handleIncrease = (event) => {
+    let itemId = event.target.parentNode.id;
+    model.getItem(itemId)
+    .then((item) => {
+      model.addToCart(item)
+    });
+  }
+
   handleRemoveAll = (event) => {
     let itemId = event.target.parentNode.id;
     model.getItem(itemId)
@@ -69,7 +85,15 @@ class Cartview extends Component {
     Object.keys(cart).forEach(key => {
       num_items += cart[key].amount;
       tot_price += cart[key].amount*cart[key].item.price;
-      shoppingList.push(<div id={cart[key].item.id} className="item" key={key}>{cart[key].item.id} {cart[key].amount} <button onClick={this.handleRemoveAll}className="remove-btn"> X </button></div>);
+      shoppingList.push(
+        <div id={cart[key].item.id} className="item" key={key}>{cart[key].item.id} {cart[key].amount}
+
+          <button onClick={this.handleRemoveAll} className="remove-btn"> X </button>
+          <button onClick={this.handleIncrease} className="increase-btn"> + </button>
+          <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
+
+        </div>
+      );
   //    console.log(key);
   //    console.log(cart[key]);
     });

@@ -1,6 +1,6 @@
 .item {
   font-size: 20px;
-  margin: 5px;
+  margin: 10px;
 }
 
 .cart {
@@ -9,6 +9,14 @@
   text-align: left;
 }
 
-.remove-btn {
+.remove-btn, .increase-btn, .decrease-btn {
   float: right;
+  /* margin-left: 3px;
+  margin-right: 3px; */
+}
+
+.remove-btn {
+  margin-left: 5px;
+  background-color: red;
+  border-color: black;
 }
