@@ -77,7 +77,7 @@ class ItemView extends Component {
                   <React.Fragment>
                     <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
                     
-                    <ImageFadeIn name={item.name} id={"images"} width={240} height={320} src={item.url} opacityTransition={2}/>
+                    <ImageFadeIn name={item.name} id={"images"} width={240} height={320} src={item.url} opacityTransition={1.5}/>
                   
                     <FadeIn>
                     <p> {item.name} </p>

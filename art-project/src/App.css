@@ -11,6 +11,10 @@
   color: #09d3ac;
 }
 
+p {
+  padding-top: 8px;
+}
+
 /* visited link */
 a:visited {
   color: #09d3ac;

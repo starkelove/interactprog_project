@@ -60,7 +60,7 @@ class About extends Component {
       <div className="row justify-content-center">
 
           <div className="col-sm-4">
-          <ImageFadeIn width={240} height={320} src={"https://static.wixstatic.com/media/a0ca6a_b9b6dcc48ff946e898dfa0f3a8590fb4~mv2.jpg/v1/fill/w_253,h_335,al_c,q_90/Me.webp"} opacityTransition={2} />
+          <ImageFadeIn width={240} height={320} src={"https://static.wixstatic.com/media/a0ca6a_b9b6dcc48ff946e898dfa0f3a8590fb4~mv2.jpg/v1/fill/w_253,h_335,al_c,q_90/Me.webp"} opacityTransition={1.5} />
           </div>
           <div className="col-sm-4">
             <FadeIn>
