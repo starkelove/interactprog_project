@@ -116,6 +116,12 @@ class Detailview extends Component {
         product = <React.Fragment>
           <div className="col-sm-4">
           <FadeIn>
+            
+          <ImageGallery items={images} />
+          </FadeIn>
+        </div>
+          <div className="col-sm-4">
+          <FadeIn>
           <h1>{title}</h1>
           <p>{description}</p>
 
@@ -125,12 +131,7 @@ class Detailview extends Component {
           </div>
           </FadeIn>
         </div>
-        <div className="col-sm-4">
-          <FadeIn>
-            
-          <ImageGallery items={images} />
-          </FadeIn>
-        </div>
+
         </React.Fragment>
         break;
 
