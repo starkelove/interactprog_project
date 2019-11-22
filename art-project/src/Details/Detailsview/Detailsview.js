@@ -5,6 +5,8 @@ import Topview from "../../Topview/Topview";
 import model from "../../Data/Model";
 import { base } from '../../base'
 import ImageGallery from 'react-image-gallery';
+import FadeIn from 'react-fade-in';
+import ImageFadeIn from 'react-image-fade-in';
 
 
 class Detailview extends Component {
@@ -73,6 +75,8 @@ class Detailview extends Component {
     let description = "";
     let price = "";
     let image = "";
+    let product = "";
+    let related = [];
 
     const images = [
       {
@@ -97,7 +101,10 @@ class Detailview extends Component {
 
     switch(this.state.status) {
       case "LOADING":
-        title = "Loading...";
+        title = "Loading..";
+        description = "Loading..";
+        price  = "Loading..";
+        product = "";
         break;
 
       case "LOADED":
@@ -105,6 +112,53 @@ class Detailview extends Component {
         description = this.state.item.description;
         price = this.state.item.price;
         image = this.state.item.url;
+        related = this.state.item.related;
+        if(related != undefined){
+          let arr = model.returnRelated(related);
+          console.log(arr);
+          related = arr.map(item => (
+            <React.Fragment>
+            <div className="col">
+            <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
+                      
+            <ImageFadeIn name={item.name} id={"images"} width={80} height={107} src={'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/missar%2Fmissar1.png?alt=media&token=bf518a35-8e24-4d17-bf24-781e9fa32ca3'} opacityTransition={1.5}/>
+                    
+            <FadeIn>
+            <p> {item.name} </p>
+            </FadeIn>
+            </Link> 
+            </div>
+            </React.Fragment>
+          ));
+        }else{
+          related = "";
+        }
+
+        product = <React.Fragment>
+          <div className="col-sm-4">
+          <FadeIn>
+            
+          <ImageGallery items={images} />
+          </FadeIn>
+        </div>
+          <div className="col-sm-4">
+          <FadeIn>
+          <h1>{title}</h1>
+          <p>{description}</p>
+
+          <div id="price">
+            <p> {price} SEK</p>
+            <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button>
+          </div>
+          <div className="row justify-content-center">
+            <p>Related products</p>
+            </div><div className="row">
+            {related}
+          </div>
+          </FadeIn>
+        </div>
+
+        </React.Fragment>
         break;
 
       default:
@@ -117,19 +171,7 @@ class Detailview extends Component {
     return (
       <div className="Detailview">
         <div className="row justify-content-center">
-            <div className="col-sm-4">
-              <h1>{title}</h1>
-              <p>{description}</p>
-
-              <div id="price">
-                <p> {price} SEK</p>
-                <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button>
-              </div>
-            </div>
-            <div className="col-sm-4">
-              <ImageGallery items={images} />
-
-            </div>
+        {product}
         </div>
 
       </div>

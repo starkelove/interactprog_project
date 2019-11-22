@@ -1,0 +1,12 @@
+#images{
+    opacity: 1;
+    display:inline-block
+}
+
+#images:hover{
+    scale: 1,5;
+    opacity:0.4; /* how much transparent you want image to be*/
+    filter:alpha(opacity=40); /* browser fix*/
+    -webkit-opacity:0.4; /*vendor prefixes for website browsers*/
+    -moz-opacity:0.4; /* same as above, edited thankx to @ Daniel_Lisik  */
+  }

@@ -33,8 +33,29 @@ class Model {
     }
   }
 
-  enoughInStorage(item) {
-    if(item.quant > 0) {
+  returnRelated(related){
+    let arr = [];
+    let i = 0;
+
+    //Go through object and add to array
+    Object.keys(related).forEach(key => {
+      arr[i] = related[key];
+      i++;
+    });
+    //Sort array so that top results are present
+    arr.sort(function(a, b) { 
+      return b.together - a.together;
+    })
+
+    //Only get the top three results
+    if(arr.length > 3){
+      arr = arr.slice(0,3);
+    }
+    return arr;
+  }
+
+  enoughInStorage(Item) {
+    if(Item.quant > 0) {
       return true;
     }
 
