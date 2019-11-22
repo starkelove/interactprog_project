@@ -16,6 +16,11 @@ class Cartview extends Component {
 
   }
 
+  handleRemove = (event) => {
+    let itemId = event.target.parentNode.id;
+    model.remove(itemId);
+  }
+
   componentDidMount() {
     console.log("render cartview");
     model.addObserver(this);
@@ -64,7 +69,7 @@ class Cartview extends Component {
     Object.keys(cart).forEach(key => {
       num_items += cart[key].amount;
       tot_price += cart[key].amount*cart[key].item.price;
-      shoppingList.push(<li className="item" key={key}>{cart[key].item.id} {cart[key].amount}</li>);
+      shoppingList.push(<div id={cart[key].item.id} className="item" key={key}>{cart[key].item.id} {cart[key].amount} <button onClick={this.handleRemove}className="remove-btn"> X </button></div>);
       console.log(key);
       console.log(cart[key]);
     });
@@ -78,11 +83,11 @@ class Cartview extends Component {
      <div className="Cartview">
 
             <div className="row">
-                <div className="col">
-                    <p>You have these items</p>
-                    <ul>
+                <div className="col cart">
+                    <h3>Your Shopping Cart</h3>
+
                     {shoppingList}
-                    </ul>
+
                 </div>
                 <div className="col">
                 {/* PayPalButton based on tutorial provided at

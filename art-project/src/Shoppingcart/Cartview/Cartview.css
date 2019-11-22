@@ -1,0 +1,14 @@
+.item {
+  font-size: 20px;
+  margin: 5px;
+}
+
+.cart {
+  margin-left: 100px;
+  margin-right: 100px;
+  text-align: left;
+}
+
+.remove-btn {
+  float: right;
+}

@@ -51,6 +51,17 @@ class Model {
     this.notifyObservers();
   }
 
+  remove(id) {
+    if(id in this._cart) {
+      this._cart[id].amount--;
+    }
+    else {
+      console.log("error, this item is not in the cart");
+    }
+    window.localStorage.setItem('cart', JSON.stringify(this._cart));
+    this.notifyObservers();
+  }
+
   addToCart(Item) {
     this.assert(Item != undefined);
     let approved = this.enoughInStorage(Item);
