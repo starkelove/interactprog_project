@@ -40,13 +40,12 @@ class Cartview extends Component {
     });
   }
 
+ 
   componentDidMount() {
     model.addObserver(this);
     this.setState({
       cart : model._cart
     });
-
-
   }
 
   componentWillUnmount() {
@@ -109,6 +108,7 @@ class Cartview extends Component {
                   onApprove = {(data, actions) => {
                     return actions.order.capture().then(function(details) {
                       alert("The transaction was completed by " + details.payer.name.given_name);
+                      model.emptyCart();
                       return fetch("/paypal-transaction-complete", {
                         method: "post",
                         body: JSON.stringify({

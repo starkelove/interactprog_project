@@ -1,4 +1,5 @@
 import { base } from '../base'
+import { throwStatement } from '@babel/types';
 
 class Model {
   constructor() {
@@ -18,6 +19,13 @@ class Model {
     else {
       return {};
     }
+  }
+
+  emptyCart() {
+    this._cart = []
+    window.localStorage.setItem('cart', JSON.stringify(this._cart));
+    this._num_items = 0;
+    this.notifyObservers();
   }
 
   setNumItems() {
