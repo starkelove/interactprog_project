@@ -60,30 +60,12 @@ class Cartview extends Component {
   }
 
   render() {
-    //Test code for Firebase
-    /*
-    var immediatelyAvailableReference = base.push('tents', {
-      data: {name: 'Jens', type: 'Grizzly'},
-      then(err){
-        if(!err){
-          //Router.transitionTo('dashboard');
-        }
-      }
-    });
-    base.fetch('tents', {
-      context: this,
-      asArray: true,
-      then(data){
-        console.log(data);
-        }
-      });*/
     let cart = this.state.cart;
-    let num_items = 0;
     let tot_price = 0;
+    let shipping_cost = 60;
     let shoppingList = [];
 
     Object.keys(cart).forEach(key => {
-      num_items += cart[key].amount;
       tot_price += cart[key].amount*cart[key].item.price;
       shoppingList.push(
         <div id={cart[key].item.id} className="item" key={key}> {cart[key].item.id}
@@ -93,13 +75,11 @@ class Cartview extends Component {
           <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
         </div>
       );
-  //    console.log(key);
-  //    console.log(cart[key]);
     });
-
-  //  console.log("num_items ", num_items);
-  //  console.log("tot_price ", tot_price);
-    let description = "You are about to pay for " + num_items + " items";
+    console.log("tot_price ", tot_price);
+    tot_price += shipping_cost;
+    console.log("tot_price with shipping cost ", tot_price);
+    let description = "Shipping cost " + shipping_cost + " SEK";
 
     return (
 
