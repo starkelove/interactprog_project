@@ -114,52 +114,26 @@ class Model {
     this.notifyObservers();
   }
 
-  async updatePopularity(list) {
+  async updatePopularity() {
+    let ogList = this.getAllItems().then((list)=>{
+      list.map(item =>{
+        
 
-    console.log(this._cart);
-    let arr = [];
-    let i = 0;
-    let ogList = await this.getAllItems();
-    console.log(ogList);
-    //Go through object and add to array
-    Object.keys(list).forEach(key => {
-      console.log(list[key].item.id);
-      console.log(list[key].item.popularity);
-      console.log(key);
-      base.update(`products/${list[key].item.id}`, {
-        data: {
-        popularity: list[key].item.popularity + 1
-        }
-      })
-    });
-    console.log(arr);
-    /*
-    arr.map(item =>(
-      base.update(`products/${item}`, {
-        data: {
-        popularity: 3 + 1
-        }
-      })
-      ));*/
-    /*
-    base.update(`products/${item.id}`, {
-      data: {
-      quant: item.quant + this._cart[item.id].amount
-      }
-    }).then(() => {
-      if(item.id in this._cart) {
-        this._num_items -=  this._cart[item.id].amount;
-        this._cart[item.id].amount = 0;
-      }
-      else {
-        console.log("error, this item is not in the cart");
-      }
-      window.localStorage.setItem('cart', JSON.stringify(this._cart));
-      this.notifyObservers();
+        let temp = item.id;
 
-    }).catch(err => {
-      console.log("error");
-    });*/
+        if(this._cart[temp] != undefined){
+          
+          base.update(`products/${temp}`, {
+            data: {
+            popularity: item.popularity + 1
+            }
+          })
+        }
+      
+      })
+    }
+    
+    );
 
   }
 
