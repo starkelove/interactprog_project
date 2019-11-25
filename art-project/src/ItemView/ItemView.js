@@ -73,11 +73,11 @@ class ItemView extends Component {
             case "LOADED":
               let products = this.state.products;
               itemList = products.map(item => (
-                <div className="col" key={item.id}>
+                <div className="col" id="imgcols" key={item.id}>
                   <React.Fragment>
                     <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
                     
-                    <ImageFadeIn name={item.name} id={"images"} src={item.url} opacityTransition={1.5}/>
+                    <ImageFadeIn name={item.name} width={280} height={380} id={"images"} src={item.url} opacityTransition={1.5}/>
                   
                     <FadeIn>
                     <p> {item.name} </p>
