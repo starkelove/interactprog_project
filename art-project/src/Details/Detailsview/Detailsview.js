@@ -144,7 +144,7 @@ class Detailview extends Component {
         let arr = productId.split("/")
         productId = arr[arr.length-1]
         if(this.state.item.id != productId){
-          console.log("Hej");
+          //console.log("Hej");
           //break;
         }
         title = this.state.item.name;
@@ -153,14 +153,15 @@ class Detailview extends Component {
         image = this.state.item.url;
         related = this.state.item.related;
         urladd = this.state.item.urladd;
+
         if(this.state.item.quant > 0) {
           btn = <React.Fragment> <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button> </React.Fragment>
         } else {
           btn = <React.Fragment> <button id="add-to-chart-btn" className="btn btn-secondary">SOLD OUT</button> </React.Fragment>
         }
+
         if(related != undefined){
           let arr = model.returnRelated(related);
-          console.log(arr);
           related = arr.map(item => (
             <React.Fragment>
             <div className="col-sm-2">

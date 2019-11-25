@@ -72,7 +72,7 @@ class Model {
     });
     //Sort array so that top results are present
     arr.sort(function(a, b) { 
-      return b.together - a.together;
+      return b.bought - a.bought;
     })
 
     //Only get the top three results
@@ -80,6 +80,15 @@ class Model {
       arr = arr.slice(0,3);
     }
     return arr;
+  }
+
+  returnPopularity(poplist){
+
+    poplist.sort(function(a, b) { 
+      return b.popularity - a.popularity;
+    })
+
+    return poplist;
   }
 
   enoughInStorage(Item) {
@@ -112,6 +121,29 @@ class Model {
     window.localStorage.setItem('cart', JSON.stringify(this._cart));
     this._num_items--;
     this.notifyObservers();
+  }
+
+  async updatePopularity() {
+    let ogList = this.getAllItems().then((list)=>{
+      list.map(item =>{
+        
+
+        let temp = item.id;
+
+        if(this._cart[temp] != undefined){
+          
+          base.update(`products/${temp}`, {
+            data: {
+            popularity: item.popularity + 1
+            }
+          })
+        }
+      
+      })
+    }
+    
+    );
+
   }
 
   removeAll(item) {
