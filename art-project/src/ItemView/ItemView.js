@@ -17,8 +17,6 @@ class ItemView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          /*images: [],*/
-          num_images : 3,
           products: []
         };
 
