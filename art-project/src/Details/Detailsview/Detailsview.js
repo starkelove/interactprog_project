@@ -7,6 +7,7 @@ import { base } from '../../base'
 import ImageGallery from 'react-image-gallery';
 import FadeIn from 'react-fade-in';
 import ImageFadeIn from 'react-image-fade-in';
+import FontAwesome from 'react-fontawesome'
 
 
 class Detailview extends Component {
@@ -28,7 +29,7 @@ class Detailview extends Component {
   handleAdd = () => {
     if(this.state.item != undefined) {
       model.addToCart(this.state.item);
-      alert(this.state.item.name + " was added to the cart");
+      alert(this.state.item.name + " was added to the cart")
     }
   }
       handleChangeImg({ target }) {
@@ -128,10 +129,8 @@ class Detailview extends Component {
     let related = [];
     let images = [];
     let urladd = [];
-
-
-
-
+    let btn = "";
+    
     switch(this.state.status) {
       case "LOADING":
         title = "Loading..";
@@ -144,8 +143,6 @@ class Detailview extends Component {
         let productId = window.location.href;
         let arr = productId.split("/")
         productId = arr[arr.length-1]
-        console.log(this.state.item.id);
-        console.log(productId);
         if(this.state.item.id != productId){
           console.log("Hej");
           //break;
@@ -156,7 +153,11 @@ class Detailview extends Component {
         image = this.state.item.url;
         related = this.state.item.related;
         urladd = this.state.item.urladd;
-        console.log(this.state.products)
+        if(this.state.item.quant > 0) {
+          btn = <React.Fragment> <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button> </React.Fragment>
+        } else {
+          btn = <React.Fragment> <button id="add-to-chart-btn" className="btn btn-secondary">SOLD OUT</button> </React.Fragment>
+        }
         if(related != undefined){
           let arr = model.returnRelated(related);
           console.log(arr);
@@ -206,7 +207,8 @@ class Detailview extends Component {
 
           <div id="price">
             <p> {price} SEK</p>
-            <button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button>
+            {/*<button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button>*/}
+            {btn}
           </div>
           <div className="row justify-content-center">
             <p>Related products</p>
