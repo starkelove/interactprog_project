@@ -10,7 +10,8 @@ class Cartview extends Component {
     super(props);
 
     this.state = {
-      cart : []
+      cart : [],
+      products: []
     };
 
 
@@ -79,6 +80,7 @@ class Cartview extends Component {
     tot_price += shipping_cost;
     console.log("tot_price with shipping cost ", tot_price);
     let description = "Shipping cost " + shipping_cost + " SEK";
+    //model.updatePopularity(this.state.cart);
 
     return (
 
@@ -108,6 +110,7 @@ class Cartview extends Component {
                   onApprove = {(data, actions) => {
                     return actions.order.capture().then(function(details) {
                       alert("The transaction was completed by " + details.payer.name.given_name);
+                      model.updatePopularity();
                       model.emptyCart();
                       return fetch("/paypal-transaction-complete", {
                         method: "post",
