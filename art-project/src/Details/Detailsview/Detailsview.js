@@ -77,26 +77,10 @@ class Detailview extends Component {
     let image = "";
     let product = "";
     let related = [];
+    let images = [];
+    let urladd = [];
 
-    const images = [
-      {
-        original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/missar%2Fmissar1.png?alt=media&token=bf518a35-8e24-4d17-bf24-781e9fa32ca3',
-        thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/missar%2Fmissar1.png?alt=media&token=bf518a35-8e24-4d17-bf24-781e9fa32ca3',
 
-      },
-      {
-        original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
-        thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
-      },
-      {
-        original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/thumbelina%2Fthumbelina1.jpg?alt=media&token=616b696b-bfe4-4fd1-b49d-84cb8a11a018',
-        thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/thumbelina%2Fthumbelina1.jpg?alt=media&token=616b696b-bfe4-4fd1-b49d-84cb8a11a018',
-      },
-      {
-        original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
-        thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
-      },
-    ];
 
 
     switch(this.state.status) {
@@ -113,6 +97,7 @@ class Detailview extends Component {
         price = this.state.item.price;
         image = this.state.item.url;
         related = this.state.item.related;
+        urladd = this.state.item.urladd;
         if(related != undefined){
           let arr = model.returnRelated(related);
           console.log(arr);
@@ -132,6 +117,20 @@ class Detailview extends Component {
           ));
         }else{
           related = "";
+        }
+        images.push({
+          original: image,
+          thumbnail: image,
+        },)
+        if(urladd != undefined){
+          for(let i = 0; i<urladd.length; i++){
+            images.push({
+              original: urladd[i],
+              thumbnail: urladd[i],
+            },)
+          }
+          
+
         }
 
         product = <React.Fragment>
