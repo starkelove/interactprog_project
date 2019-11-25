@@ -20,6 +20,7 @@ class App extends Component {
   }
 
   render() {
+    //window.localStorage.clear();
     return (
       <div className="App">
         <header>

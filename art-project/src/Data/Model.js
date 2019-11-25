@@ -5,6 +5,7 @@ class Model {
     this._observers = [];
     this._items = [];
     this._cart = this.setCart();
+    this._num_items = this.setNumItems();
   }
 
   setCart() {
@@ -18,6 +19,24 @@ class Model {
       return {};
     }
   }
+
+  setNumItems() {
+   let num_items = 0;
+    if(this._cart !== undefined) {
+      Object.keys(this._cart).forEach(key => {
+        num_items += this._cart[key].amount;
+        console.log(this._cart[key].amount)
+      });
+    } else {
+      num_items = 0;
+    }
+    return num_items 
+  }
+
+  getNumItems() {
+    return this._num_items;
+  }
+
   addObserver(observer) {
     this._observers.push(observer);
   }
@@ -69,6 +88,7 @@ class Model {
       this._cart[item.id] = {item: item, amount: 1};
     }
     window.localStorage.setItem('cart', JSON.stringify(this._cart));
+    this._num_items++;
     this.notifyObservers();
   }
 
@@ -81,6 +101,7 @@ class Model {
       console.log("no such item in cart");
     }
     window.localStorage.setItem('cart', JSON.stringify(this._cart));
+    this._num_items--;
     this.notifyObservers();
   }
 
@@ -92,6 +113,7 @@ class Model {
       }
     }).then(() => {
       if(item.id in this._cart) {
+        this._num_items -=  this._cart[item.id].amount;
         this._cart[item.id].amount = 0;
       }
       else {

@@ -1,23 +1,36 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Topview.css";
+import model from "../Data/Model";
 
 class Topview extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      num_items: model.getNumItems()
+    }
+    
+
   }
 
   componentDidMount() {
+    model.addObserver(this);
+    this.setState({
+      num_items : model.getNumItems()
+    });
+
   }
 
   componentWillUnmount() {
-
+    model.removeObserver(this);
   }
 
 
   update() {
-
+    this.setState({
+      num_items : model.getNumItems()
+    });
   }
 
 
@@ -39,7 +52,7 @@ class Topview extends Component {
                 </div>
                 <div className="col">
                 <Link to="/shoppingcart">
-                    <p>Shopping cart</p>
+                  <p>Shopping cart ({this.state.num_items})</p>
                     </Link>
 
                 </div>
