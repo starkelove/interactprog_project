@@ -1,0 +1,41 @@
+.item {
+  font-size: 20px;
+  margin: 10px;
+}
+
+.cart {
+  margin-left: 100px;
+  margin-right: 100px;
+  text-align: left;
+}
+
+.remove-btn, .increase-btn, .decrease-btn {
+  float: right;
+  /* margin-left: 3px;
+  margin-right: 3px; */
+}
+
+.decrease-btn {
+  margin-left: 20px;
+}
+
+.remove-btn {
+  margin-left: 50px;
+  background-color: red;
+  border-color: black;
+}
+
+.item-name {
+  float: right;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#paypal-div {
+  width: 200px;
+  margin-right: 100px;
+  margin-top: 60px;
+  float: right;
+
+
+}
