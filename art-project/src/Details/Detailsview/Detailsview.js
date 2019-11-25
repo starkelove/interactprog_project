@@ -144,10 +144,8 @@ class Detailview extends Component {
         let productId = window.location.href;
         let arr = productId.split("/")
         productId = arr[arr.length-1]
-        console.log(this.state.item.id);
-        console.log(productId);
         if(this.state.item.id != productId){
-          console.log("Hej");
+          //console.log("Hej");
           //break;
         }
         title = this.state.item.name;
@@ -156,10 +154,8 @@ class Detailview extends Component {
         image = this.state.item.url;
         related = this.state.item.related;
         urladd = this.state.item.urladd;
-        console.log(this.state.products)
         if(related != undefined){
           let arr = model.returnRelated(related);
-          console.log(arr);
           related = arr.map(item => (
             <React.Fragment>
             <div className="col-sm-2">

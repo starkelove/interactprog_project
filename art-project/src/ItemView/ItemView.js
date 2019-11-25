@@ -72,6 +72,7 @@ class ItemView extends Component {
               break;
             case "LOADED":
               let products = this.state.products;
+              modelInstance.returnPopularity(products);
               itemList = products.map(item => (
                 <div className="col" id="imgcols" key={item.id}>
                   <React.Fragment>
