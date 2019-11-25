@@ -120,7 +120,7 @@ class Detailview extends Component {
           console.log(arr);
           related = arr.map(item => (
             <React.Fragment>
-            <div className="col">
+            <div className="col-sm-2">
             <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
                       
             <ImageFadeIn name={item.name} id={"images"} width={80} height={107} src={'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/missar%2Fmissar1.png?alt=media&token=bf518a35-8e24-4d17-bf24-781e9fa32ca3'} opacityTransition={1.5}/>
@@ -154,7 +154,7 @@ class Detailview extends Component {
           </div>
           <div className="row justify-content-center">
             <p>Related products</p>
-            </div><div className="row">
+            </div><div className="row justify-content-center">
             {related}
           </div>
           </FadeIn>
