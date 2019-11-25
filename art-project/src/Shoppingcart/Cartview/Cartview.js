@@ -41,18 +41,12 @@ class Cartview extends Component {
     });
   }
 
+ 
   componentDidMount() {
     model.addObserver(this);
     this.setState({
       cart : model._cart
     });
-    base.bindToState('products/', {
-      context: this,
-      state: "products",
-      asArray: true
-    });
-
-
   }
 
   componentWillUnmount() {
@@ -117,6 +111,7 @@ class Cartview extends Component {
                     return actions.order.capture().then(function(details) {
                       alert("The transaction was completed by " + details.payer.name.given_name);
                       model.updatePopularity();
+                      model.emptyCart();
                       return fetch("/paypal-transaction-complete", {
                         method: "post",
                         body: JSON.stringify({

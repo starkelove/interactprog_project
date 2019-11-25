@@ -1,4 +1,5 @@
 import { base } from '../base'
+import { throwStatement } from '@babel/types';
 
 class Model {
   constructor() {
@@ -12,12 +13,20 @@ class Model {
     console.log("setCart");
     let cart = window.localStorage.getItem('cart');
     console.log(cart);
-    if(cart != undefined) {
+    if(cart != undefined || null) {
+      console.log("null", cart)
       return JSON.parse(cart);
     }
     else {
       return {};
     }
+  }
+
+  emptyCart() {
+    window.localStorage.removeItem('cart');
+    this._cart = []
+    this._num_items = 0;
+    this.notifyObservers();
   }
 
   setNumItems() {
