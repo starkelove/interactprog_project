@@ -22,6 +22,7 @@ class Detailview extends Component {
             status: "LOADING",
             selectedProduct: productId,
         };
+        this.handleChangeImg = this.handleChangeImg.bind(this);
     }
 
   handleAdd = () => {
@@ -30,24 +31,48 @@ class Detailview extends Component {
       alert(this.state.item.name + " was added to the cart");
     }
   }
+      handleChangeImg({ target }) {
+        //history.pushState(this.state);
+        console.log(target.parentNode.id);
+        this.state = {
+          selectedProduct: target.parentNode.id,
+          status: "LOADING",
+        }
+        this.setState({
+          [target.parentNode.selectedProduct]: target.parentNode.id,
+          [target.selectedProduct]: target.parentNode.id,
+          status: "LOADING",
+
+
+        });
+        console.log(this.state.selectedProduct);
+        this.update();
+    }
 
   componentWillUnmount() {
     // remove observer
+    base.removeBinding("item");
+    this.update();
   }
 
-  componentDidMount(){
-
-  }
   // this methods is called by React lifecycle when the
   // component is actually shown to the user (mounted to DOM)
   // that's a good place to call the API and get the data
   componentDidMount() {
+    console.log(this.state.selectedProduct);
+    
     base.bindToState(`products/${this.state.selectedProduct}`, {
       context: this,
       state: "item",
       asArray: false
     });
 
+    base.bindToState('products/', {
+      context: this,
+      state: "products",
+      asArray: true
+    });
+    
     model
     .getItem(this.state.selectedProduct)
     .then(result => {
@@ -67,6 +92,29 @@ class Detailview extends Component {
 
   update() {
     // set states
+    base.removeBinding("item");
+    console.log(this.state.selectedProduct);
+    
+    model
+    .getItem(this.state.selectedProduct)
+    .then(result => {
+      this.setState({
+        status: "LOADED",
+        item: result
+      });
+      console.log("Here is result");
+      console.log(this.state.item);
+    })
+    .catch(() => {
+      this.setState({
+        status: "ERROR"
+      });
+    });
+    base.bindToState(`products/${this.state.selectedProduct}`, {
+      context: this,
+      state: "item",
+      asArray: false
+    });
   };
 
 
@@ -78,26 +126,10 @@ class Detailview extends Component {
     let image = "";
     let product = "";
     let related = [];
+    let images = [];
+    let urladd = [];
 
-    const images = [
-      {
-        original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/missar%2Fmissar1.png?alt=media&token=bf518a35-8e24-4d17-bf24-781e9fa32ca3',
-        thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/missar%2Fmissar1.png?alt=media&token=bf518a35-8e24-4d17-bf24-781e9fa32ca3',
 
-      },
-      {
-        original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
-        thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
-      },
-      {
-        original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/thumbelina%2Fthumbelina1.jpg?alt=media&token=616b696b-bfe4-4fd1-b49d-84cb8a11a018',
-        thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/thumbelina%2Fthumbelina1.jpg?alt=media&token=616b696b-bfe4-4fd1-b49d-84cb8a11a018',
-      },
-      {
-        original: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
-        thumbnail: 'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/praguestatues%2Fpraguestatues1.png?alt=media&token=9a87660d-714c-4aa7-abeb-d12df800a5e1',
-      },
-    ];
 
 
     switch(this.state.status) {
@@ -109,11 +141,22 @@ class Detailview extends Component {
         break;
 
       case "LOADED":
+        let productId = window.location.href;
+        let arr = productId.split("/")
+        productId = arr[arr.length-1]
+        console.log(this.state.item.id);
+        console.log(productId);
+        if(this.state.item.id != productId){
+          console.log("Hej");
+          //break;
+        }
         title = this.state.item.name;
         description = this.state.item.description;
         price = this.state.item.price;
         image = this.state.item.url;
         related = this.state.item.related;
+        urladd = this.state.item.urladd;
+        console.log(this.state.products)
         if(related != undefined){
           let arr = model.returnRelated(related);
           console.log(arr);
@@ -122,7 +165,7 @@ class Detailview extends Component {
             <div className="col-sm-2">
             <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
                       
-            <ImageFadeIn name={item.name} id={"images"} width={80} height={107} src={'https://firebasestorage.googleapis.com/v0/b/art-project-c8e48.appspot.com/o/missar%2Fmissar1.png?alt=media&token=bf518a35-8e24-4d17-bf24-781e9fa32ca3'} opacityTransition={1.5}/>
+            <ImageFadeIn name={item.name} id={"images"} width={80} height={107} src={item.url} opacityTransition={1.5}/>
                     
             <FadeIn>
             <p> {item.name} </p>
@@ -133,6 +176,20 @@ class Detailview extends Component {
           ));
         }else{
           related = "";
+        }
+        images.push({
+          original: image,
+          thumbnail: image,
+        },)
+        if(urladd != undefined){
+          for(let i = 0; i<urladd.length; i++){
+            images.push({
+              original: urladd[i],
+              thumbnail: urladd[i],
+            },)
+          }
+          
+
         }
 
         product = <React.Fragment>
