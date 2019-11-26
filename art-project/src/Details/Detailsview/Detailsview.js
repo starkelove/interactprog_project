@@ -30,7 +30,7 @@ class Detailview extends Component {
   handleAdd = () => {
     if(this.state.item != undefined) {
       model.addToCart(this.state.item);
-      alert(this.state.item.name + " was added to the cart")
+      alert(this.state.item.name + " is added to the cart")
     }
   }
 
