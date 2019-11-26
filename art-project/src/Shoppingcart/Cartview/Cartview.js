@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./Cartview.css";
-import { base } from "../../base";
 import {PayPalButton} from "react-paypal-button-v2"
 import model from "../../Data/Model";
 import { isOptionalMemberExpression } from "@babel/types";
+import Confirmview from "./Confirmview";
 
 class Cartview extends Component {
   constructor(props) {
@@ -11,10 +11,9 @@ class Cartview extends Component {
 
     this.state = {
       cart : [],
-      products: []
+      products : [],
+      approved : false 
     };
-
-
   }
 
   handleDecrease = (event) => {
@@ -41,7 +40,12 @@ class Cartview extends Component {
     });
   }
 
- 
+  onApprove() {
+    this.setState({
+      approved : true
+    })
+  }
+
   componentDidMount() {
     model.addObserver(this);
     this.setState({
@@ -56,7 +60,7 @@ class Cartview extends Component {
   update() {
     this.setState({
       cart : model._cart
-    });
+    });  
   }
 
   render() {
@@ -64,7 +68,7 @@ class Cartview extends Component {
     let tot_price = 0;
     let shipping_cost = 60;
     let shoppingList = [];
-
+   
     Object.keys(cart).forEach(key => {
       tot_price += cart[key].amount*cart[key].item.price;
       shoppingList.push(
@@ -76,17 +80,15 @@ class Cartview extends Component {
         </div>
       );
     });
-    console.log("tot_price ", tot_price);
     tot_price += shipping_cost;
-    console.log("tot_price with shipping cost ", tot_price);
+    
     let description = "Shipping cost " + shipping_cost + " SEK";
-    //model.updatePopularity(this.state.cart);
-
+    var self = this;
+   
     return (
-
      <div className="Cartview">
-
-            <div>
+          {this.state.approved ? <Confirmview/> :  
+            <div className="payment">
                 <div className="cart">
                     <h3>Your Shopping Cart</h3>
                     {shoppingList}
@@ -112,6 +114,7 @@ class Cartview extends Component {
                       alert("The transaction was completed by " + details.payer.name.given_name);
                       model.updatePopularity();
                       model.emptyCart();
+                      self.onApprove();
                       return fetch("/paypal-transaction-complete", {
                         method: "post",
                         body: JSON.stringify({
@@ -120,22 +123,24 @@ class Cartview extends Component {
                       });
                     });
                   }}
-                  // onSuccess = {(details) =>
-                  //   alert("The transaction was completed by " + details.payer.name.given_name)}
                   onError = {(error) =>
                     alert(error)}
-                  onCancel = {() =>
-                    alert("The transaction was cancelled ")
+                  onCancel = {() => {
+                    alert("The transaction was cancelled ");
+                  }
+                   
                   }
                   options={{
                     clientId: "sb",
                     currency: "SEK"
                   }}
-
+                  
                 />
-                </div>
+                </div> 
             </div>
+          }     
     </div>
+    
     );
   }
 }
