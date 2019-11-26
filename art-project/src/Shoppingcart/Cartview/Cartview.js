@@ -3,6 +3,7 @@ import "./Cartview.css";
 import {PayPalButton} from "react-paypal-button-v2"
 import model from "../../Data/Model";
 import Confirmview from "./Confirmview";
+import {Transaction} from "../../Data/Transaction";
 
 class Cartview extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class Cartview extends Component {
     this.setState({
       approved : true
     })
+
   }
 
   componentDidMount() {
@@ -67,6 +69,7 @@ class Cartview extends Component {
     let tot_price = 0;
     let shipping_cost = 60;
     let shoppingList = [];
+    let item_ids = [];
     let num_items = 0;
     let description = ""
     var self = this;
@@ -81,6 +84,7 @@ class Cartview extends Component {
           <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
         </div>
       );
+      item_ids.push(cart[key].item.id);
     });
     
     tot_price += shipping_cost;
@@ -122,11 +126,14 @@ class Cartview extends Component {
                     // paypal.com also captures the funds from the transaction
                     onApprove = {(data, actions) => {
                       return actions.order.capture().then(function(details) {
-                        alert("The transaction was completed by " + details.payer.name.given_name);
+                        alert("The transaction was completed ");
+                        let transaction = new Transaction(details, tot_price-shipping_cost, item_ids, num_items);
+                        console.log("transaction obj ", transaction);
+                        
                         model.updatePopularity();
                         model.emptyCart();
                         self.onApprove();
-
+                        
                         // call your server to save the transaction
                         return fetch("/paypal-transaction-complete", {
                           method: "post",
