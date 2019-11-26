@@ -103,6 +103,8 @@ class Cartview extends Component {
                   {/* PayPalButton based on tutorial provided at
                   https://github.com/Luehang/react-paypal-button-v2.git */}
                   {num_items > 0 ?  <PayPalButton
+
+                    // sets up the details of the transaction
                     createOrder={(data, actions) => {
                       return actions.order.create({
                         "purchase_units": [{
@@ -110,17 +112,22 @@ class Cartview extends Component {
                             "amount": {
                               currency_code: "SEK",
                               value: tot_price
-                            }
+                            },
                           },
                           ],
                       });
                     }}
+
+                    // called when the buyer approves the transaction on
+                    // paypal.com also captures the funds from the transaction
                     onApprove = {(data, actions) => {
                       return actions.order.capture().then(function(details) {
                         alert("The transaction was completed by " + details.payer.name.given_name);
                         model.updatePopularity();
                         model.emptyCart();
                         self.onApprove();
+
+                        // call your server to save the transaction
                         return fetch("/paypal-transaction-complete", {
                           method: "post",
                           body: JSON.stringify({
@@ -131,14 +138,11 @@ class Cartview extends Component {
                     }}
                     onError = {(error) =>
                       alert(error)}
-                    onCancel = {() => {
-                      alert("The transaction was cancelled ");
-                    }
-                    
-                    }
+                    onCancel = {() => 
+                      alert("The transaction was cancelled ")}
                     options={{
                       clientId: "sb",
-                      currency: "SEK"
+                      currency: "SEK",
                     }}
                     
                   />: ""}
