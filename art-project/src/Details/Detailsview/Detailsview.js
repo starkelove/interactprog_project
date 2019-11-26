@@ -23,6 +23,7 @@ class Detailview extends Component {
             status: "LOADING",
             selectedProduct: productId,
         };
+        console.log("Stieg geil");
         this.handleChangeImg = this.handleChangeImg.bind(this);
     }
 
@@ -32,23 +33,25 @@ class Detailview extends Component {
       alert(this.state.item.name + " was added to the cart")
     }
   }
-      handleChangeImg({ target }) {
-        //history.pushState(this.state);
-        console.log(target.parentNode.id);
-        this.state = {
-          selectedProduct: target.parentNode.id,
-          status: "LOADING",
-        }
-        this.setState({
-          [target.parentNode.selectedProduct]: target.parentNode.id,
-          [target.selectedProduct]: target.parentNode.id,
-          status: "LOADING",
 
-
-        });
-        console.log(this.state.selectedProduct);
-        this.update();
+  handleChangeImg({ target }) {
+    //history.pushState(this.state);
+    console.log(target.parentNode.id);
+    console.log(this.state.selectedProduct);
+    this.state = {
+      selectedProduct: target.parentNode.id,
+      status: "LOADING",
     }
+    this.setState({
+      [target.parentNode.selectedProduct]: target.parentNode.id,
+      [target.selectedProduct]: target.parentNode.id,
+      status: "LOADING",
+
+
+    });
+    console.log(this.state.selectedProduct);
+    this.update();
+  }
 
   componentWillUnmount() {
     // remove observer
@@ -118,6 +121,22 @@ class Detailview extends Component {
     });
   };
 
+  onWrongState(id){
+    this.state = {
+      status: "LOADED",
+      selectedProduct: id,
+      item: "",
+    }
+    this.setState({
+      status: "LOADED",
+      selectedProduct: id,
+      item: "",
+    });
+    console.log("Should update state to ", id);
+    console.log("Updated state to", this.state.selectedProduct);
+    this.update();
+  }
+
 
   render() {
     // create variables
@@ -143,8 +162,10 @@ class Detailview extends Component {
         let productId = window.location.href;
         let arr = productId.split("/")
         productId = arr[arr.length-1]
-        if(this.state.item.id != productId){
-          //console.log("Hej");
+        if(this.state.selectedProduct != productId){
+          console.log("this.state.selectedProduct", this.state.selectedProduct);
+          console.log("productId", productId);
+          this.onWrongState(productId);
           //break;
         }
         title = this.state.item.name;
