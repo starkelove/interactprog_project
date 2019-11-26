@@ -131,6 +131,7 @@ class Cartview extends Component {
                         console.log("transaction obj ", transaction);
                         
                         model.updatePopularity();
+                        model.updateTransactions(transaction);
                         model.emptyCart();
                         self.onApprove();
                         

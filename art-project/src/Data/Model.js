@@ -146,6 +146,29 @@ class Model {
 
   }
 
+  updateTransactions(transactions){
+    base.push('transactions/',{
+      data: {transactions},
+    }
+    )
+  }
+
+  async fetchTransactions(){
+    let result = await base.fetch('transactions', {
+      context: this,
+      asArray: true
+    }).then(data => {
+      return data;
+    }).catch(error => {
+      //handle error
+    })
+
+    this.items = await result;
+
+    return this.items;
+  
+  }
+
   removeAll(item) {
 
     base.update(`products/${item.id}`, {
