@@ -39,7 +39,7 @@ class Model {
     } else {
       num_items = 0;
     }
-    return num_items 
+    return num_items
   }
 
   getNumItems() {
@@ -71,7 +71,7 @@ class Model {
       i++;
     });
     //Sort array so that top results are present
-    arr.sort(function(a, b) { 
+    arr.sort(function(a, b) {
       return b.bought - a.bought;
     })
 
@@ -84,19 +84,33 @@ class Model {
 
   returnPopularity(poplist){
 
-    poplist.sort(function(a, b) { 
+    poplist.sort(function(a, b) {
       return b.popularity - a.popularity;
     })
 
     return poplist;
   }
 
-  enoughInStorage(Item) {
-    if(Item.quant > 0) {
-      return true;
+  enoughInStorage(item) {
+    console.log(item.quant);
+    console.log((item.id in this._cart) && (item.quant >= this._cart[item.id].amount));
+    if(((item.id in this._cart) && (item.quant > this._cart[item.id].amount)) || (!(item.id in this._cart) && item.quant > 0)) {
+        return true;
     }
-
 }
+
+  enoughItemsInStorage() {
+    let outOfStock = [];
+    Object.keys(this._cart).forEach(key => {
+      console.log("quantity: " + this._cart[key].item.quant + ", amount: " + this._cart[key].amount);
+      if(this._cart[key].item.quant < this._cart[key].amount) {
+        this._cart[key].amount = this._cart[key].item.quant;
+        outOfStock.push(this._cart[key].item);
+      }
+    });
+    return outOfStock;
+  }
+
   add(item) {
     if(item.id in this._cart) {
       this._cart[item.id].item = item;
@@ -126,22 +140,22 @@ class Model {
   async updatePopularity() {
     let ogList = this.getAllItems().then((list)=>{
       list.map(item =>{
-        
+
 
         let temp = item.id;
 
         if(this._cart[temp] != undefined){
-          
+
           base.update(`products/${temp}`, {
             data: {
             popularity: item.popularity + 1
             }
           })
         }
-      
+
       })
     }
-    
+
     );
 
   }
@@ -201,17 +215,12 @@ class Model {
     this.assert(item != undefined);
     let approved = this.enoughInStorage(item);
     if(approved) {
-      base.update(`products/${item.id}`, {
-        data: {
-        quant: item.quant - 1
-        }
-      }
-      ).then(() => {
-        this.add(item);
-        console.log(this._cart);
-      }).catch(err => {
-        console.log("error");
-      });
+      this.add(item);
+      alert(item.name + " is added to the cart");
+      console.log(this._cart);
+    }
+    else {
+      alert(item.name + " could not be added to the cart");
     }
     this.printDatabase();
   }
@@ -221,20 +230,38 @@ class Model {
     if(this._cart[item.id].amount == 0) {
       return;
     }
-    base.update(`products/${item.id}`, {
-      data: {
-      quant: item.quant + 1
-      }
-    }).then(() => {
-      this.remove(item);
-
-      console.log(this._cart);
-    }).catch(err => {
-      console.log("error");
-    });
+    this.remove(item);
+    console.log(this._cart);
     this.printDatabase();
     }
 
+    async updateDatabase() {
+      Object.keys(this._cart).forEach(key => {
+
+        console.log("quantity: " + this._cart[key].item.quant + ", amount: " + this._cart[key].amount);
+        this.assert((this._cart[key].item.quant - this._cart[key].amount) >= 0)
+        base.update(`products/${key}`, {
+          data: {
+          quant: this._cart[key].item.quant - this._cart[key].amount
+          }
+        }).catch(err => {
+          console.log("error");
+        });
+
+    });
+    console.log("after:");
+    this.printDatabase();
+
+    }
+
+    printDatabase() {
+      this.getAllItems()
+      .then((items) => {
+        items.forEach(item => {
+          console.log("id: " + item.id + " quant: " + item.quant);
+        });
+      })
+    }
 
   async getAllItems() {
     let result = await base.fetch('products', {
@@ -247,7 +274,6 @@ class Model {
     })
 
     this.items = await result;
-
     return this.items;
   }
 
@@ -263,14 +289,7 @@ class Model {
     return result;
   }
 
-  printDatabase() {
-    this.getAllItems()
-    .then((items) => {
-      items.forEach(item => {
-        console.log("id: " + item.id + " quant: " + item.quant);
-      });
-    })
-  }
+
 
   assert(condition, message) {
     if (!condition) {
