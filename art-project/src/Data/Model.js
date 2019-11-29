@@ -218,11 +218,11 @@ class Model extends ObservableModel{
     let approved = this.enoughInStorage(item);
     if(approved) {
       this.add(item);
-      alert(item.name + " is added to the cart");
+    //  alert(item.name + " is added to the cart");
       console.log(this._cart);
     }
     else {
-      alert(item.name + " could not be added to the cart");
+    //  alert(item.name + " could not be added to the cart");
     }
     this.printDatabase();
   }
@@ -295,7 +295,7 @@ class Model extends ObservableModel{
 
   assert(condition, message) {
     if (!condition) {
-        throw message || condition;
+        throw message || "condition is " + condition;
     }
   }
 }
