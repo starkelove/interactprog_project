@@ -1,8 +1,10 @@
 import { base } from '../base'
 import { throwStatement } from '@babel/types';
+import ObservableModel from "./ObservableModel";
 
-class Model {
+class Model extends ObservableModel{
   constructor() {
+    super();
     this._observers = [];
     this._items = [];
     this._cart = this.setCart();
@@ -13,8 +15,8 @@ class Model {
     console.log("setCart");
     let cart = window.localStorage.getItem('cart');
     console.log(cart);
-    if(cart != undefined || null) {
-      console.log("null", cart)
+    if(cart != undefined && cart != null && cart != []) {
+      console.log("not undefined, null or []", cart)
       return JSON.parse(cart);
     }
     else {
@@ -87,13 +89,10 @@ class Model {
     poplist.sort(function(a, b) {
       return b.popularity - a.popularity;
     })
-
     return poplist;
   }
 
   enoughInStorage(item) {
-    console.log(item.quant);
-    console.log((item.id in this._cart) && (item.quant >= this._cart[item.id].amount));
     if(((item.id in this._cart) && (item.quant > this._cart[item.id].amount)) || (!(item.id in this._cart) && item.quant > 0)) {
         return true;
     }
@@ -103,6 +102,9 @@ class Model {
     let outOfStock = [];
     Object.keys(this._cart).forEach(key => {
       console.log("quantity: " + this._cart[key].item.quant + ", amount: " + this._cart[key].amount);
+      if(key == "hokusaiprint") {
+        this._cart[key].item.quant = 1;
+      }
       if(this._cart[key].item.quant < this._cart[key].amount) {
         this._cart[key].amount = this._cart[key].item.quant;
         outOfStock.push(this._cart[key].item);
@@ -293,7 +295,7 @@ class Model {
 
   assert(condition, message) {
     if (!condition) {
-        throw message || "Assertion failed";
+        throw message || condition;
     }
   }
 }

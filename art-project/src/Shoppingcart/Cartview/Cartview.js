@@ -149,8 +149,8 @@ class Cartview extends Component {
                         });
                       });
                     }}
-                    onError = {(error) =>
-                      alert(error)}
+                  //  onError = {(error) =>
+                    //  alert(error)}
                     onCancel = {() =>
                       alert("The transaction was cancelled ")}
                     options={{

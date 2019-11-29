@@ -55,7 +55,7 @@ class Detailview extends Component {
   componentWillUnmount() {
     // remove observer
     base.removeBinding("item");
-    this.update();
+  //  this.update();
   }
 
   // this methods is called by React lifecycle when the
@@ -183,7 +183,7 @@ class Detailview extends Component {
         if(related != undefined){
           let arr = model.returnRelated(related);
           related = arr.map(item => (
-            <React.Fragment>
+            <React.Fragment key={item.id}>
             <div className="col-sm-2">
             <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
 
