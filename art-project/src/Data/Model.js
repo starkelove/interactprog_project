@@ -26,7 +26,7 @@ class Model extends ObservableModel{
 
   emptyCart() {
     window.localStorage.removeItem('cart');
-    this._cart = []
+    this._cart = {};
     this._num_items = 0;
     this.notifyObservers();
   }
@@ -163,54 +163,16 @@ class Model extends ObservableModel{
   }
 
   removeAll(item) {
-
-    base.update(`products/${item.id}`, {
-      data: {
-      quant: item.quant + this._cart[item.id].amount
-      }
-    }).then(() => {
-      if(item.id in this._cart) {
-        this._num_items -=  this._cart[item.id].amount;
-        this._cart[item.id].amount = 0;
-      }
-      else {
-        console.log("error, this item is not in the cart");
-      }
-      window.localStorage.setItem('cart', JSON.stringify(this._cart));
-      this.notifyObservers();
-
-    }).catch(err => {
-      console.log("error");
-    });
-    this.printDatabase();
-  }
-
-  adjustAmount(type, id) {
-    if(id in this._cart) {
-      switch (type) {
-        case "add":
-          let item = this.getItem(id)
-          .then((item) => {
-            this.addToCart(item);
-          })
-          .err(console.log);
-
-          break;
-        case "remove":
-          if(this._cart[id].amount == 0) {
-            break;
-          }
-          this._cart[id].amount--;
-          break;
-        default:
-        console.log("didn't pass add or remove as parameter");
-      }
+    if(item.id in this._cart) {
+      this._num_items -=  this._cart[item.id].amount;
+      this._cart[item.id].amount = 0;
     }
     else {
       console.log("error, this item is not in the cart");
     }
     window.localStorage.setItem('cart', JSON.stringify(this._cart));
     this.notifyObservers();
+    this.printDatabase();
   }
 
   addToCart(item) {
