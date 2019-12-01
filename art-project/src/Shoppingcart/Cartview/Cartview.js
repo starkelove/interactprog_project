@@ -74,7 +74,11 @@ class Cartview extends Component {
     let description = ""
     var self = this;
 
-    Object.keys(cart).forEach(key => {
+    Object.keys(cart)
+    .filter((key) => {
+      return cart[key].amount > 0
+    })
+    .forEach(key => {
       tot_price += cart[key].amount*cart[key].item.price;
       shoppingList.push(
         <div id={cart[key].item.id} className="item" key={key}> {cart[key].item.name}
