@@ -30,7 +30,6 @@ class Detailview extends Component {
   handleAdd = () => {
     if(this.state.item != undefined) {
       model.addToCart(this.state.item);
-      alert(this.state.item.name + " is added to the cart")
     }
   }
 
@@ -56,7 +55,7 @@ class Detailview extends Component {
   componentWillUnmount() {
     // remove observer
     base.removeBinding("item");
-    this.update();
+  //  this.update();
   }
 
   // this methods is called by React lifecycle when the
@@ -64,7 +63,7 @@ class Detailview extends Component {
   // that's a good place to call the API and get the data
   componentDidMount() {
     console.log(this.state.selectedProduct);
-    
+
     base.bindToState(`products/${this.state.selectedProduct}`, {
       context: this,
       state: "item",
@@ -76,7 +75,7 @@ class Detailview extends Component {
       state: "products",
       asArray: true
     });
-    
+
     model
     .getItem(this.state.selectedProduct)
     .then(result => {
@@ -98,7 +97,7 @@ class Detailview extends Component {
     // set states
     base.removeBinding("item");
     console.log(this.state.selectedProduct);
-    
+
     model
     .getItem(this.state.selectedProduct)
     .then(result => {
@@ -149,7 +148,7 @@ class Detailview extends Component {
     let images = [];
     let urladd = [];
     let btn = "";
-    
+
     switch(this.state.status) {
       case "LOADING":
         title = "Loading..";
@@ -184,16 +183,16 @@ class Detailview extends Component {
         if(related != undefined){
           let arr = model.returnRelated(related);
           related = arr.map(item => (
-            <React.Fragment>
+            <React.Fragment key={item.id}>
             <div className="col-sm-2">
             <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
-                      
+
             <ImageFadeIn name={item.name} id={"images"} width={80} height={107} src={item.url} opacityTransition={1.5}/>
-                    
+
             <FadeIn>
             <p> {item.name} </p>
             </FadeIn>
-            </Link> 
+            </Link>
             </div>
             </React.Fragment>
           ));
@@ -211,14 +210,14 @@ class Detailview extends Component {
               thumbnail: urladd[i],
             },)
           }
-          
+
 
         }
 
         product = <React.Fragment>
           <div className="col-sm-4">
           <FadeIn>
-            
+
           <ImageGallery items={images} />
           </FadeIn>
         </div>

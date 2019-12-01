@@ -2,7 +2,7 @@
 import { base } from '../base'
 import firebase from 'firebase';
 import { Component } from 'react';
-const storage = firebase.storage().ref()
+
 
 class Imagehandler extends Component{
 
@@ -11,7 +11,7 @@ class Imagehandler extends Component{
         console.log(image);
         let temp = `${image}`;
         let string = "thumbelina/thumbelina1.jpg";
-        let grej = await storage.child(`${string}`).getDownloadURL().then((url) => {
+        let grej = await firebase.storage().ref().child(`${string}`).getDownloadURL().then((url) => {
         console.log(url);
         return url;
         }).catch((error) => {

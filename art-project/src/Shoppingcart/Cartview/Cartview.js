@@ -12,7 +12,7 @@ class Cartview extends Component {
     this.state = {
       cart : [],
       products : [],
-      approved : false 
+      approved : false
     };
   }
 
@@ -61,7 +61,7 @@ class Cartview extends Component {
   update() {
     this.setState({
       cart : model._cart
-    });  
+    });
   }
 
   render() {
@@ -73,11 +73,15 @@ class Cartview extends Component {
     let num_items = 0;
     let description = ""
     var self = this;
-   
-    Object.keys(cart).forEach(key => {
+
+    Object.keys(cart)
+    .filter((key) => {
+      return cart[key].amount > 0
+    })
+    .forEach(key => {
       tot_price += cart[key].amount*cart[key].item.price;
       shoppingList.push(
-        <div id={cart[key].item.id} className="item" key={key}> {cart[key].item.id}
+        <div id={cart[key].item.id} className="item" key={key}> {cart[key].item.name}
           <button onClick={this.handleRemoveAll} className="remove-btn"> X </button>
           <button onClick={this.handleIncrease} className="increase-btn"> + </button>
           <span className="item-name">{cart[key].amount}</span>
@@ -86,7 +90,7 @@ class Cartview extends Component {
       );
       item_ids.push(cart[key].item.id);
     });
-    
+
     tot_price += shipping_cost;
     description = "Shipping cost " + shipping_cost + " SEK";
 
@@ -94,10 +98,10 @@ class Cartview extends Component {
     if(num_items === 0) {
       shoppingList = "You have no items in your cart"
     }
-   
+
     return (
      <div className="Cartview">
-          {this.state.approved ? <Confirmview/> :  
+          {this.state.approved ? <Confirmview/> :
             <div className="payment">
                 <div className="cart">
                     <h3>Your Shopping Cart</h3>
@@ -110,31 +114,37 @@ class Cartview extends Component {
 
                     // sets up the details of the transaction
                     createOrder={(data, actions) => {
-                      return actions.order.create({
-                        "purchase_units": [{
-                            "description": description,
-                            "amount": {
-                              currency_code: "SEK",
-                              value: tot_price
+                      let outOfStock = model.enoughItemsInStorage();
+                      if(outOfStock.length == 0) {
+                        return actions.order.create({
+                          "purchase_units": [{
+                              "description": description,
+                              "amount": {
+                                currency_code: "SEK",
+                                value: tot_price
+                              },
                             },
-                          },
-                          ],
-                      });
+                            ],
+                        });
+                      }
+                      else {
+                      //  alert("Unfortunately, someone has grabbed the last " + outOfStock[0].name + ". ");
+                      }
                     }}
 
                     // called when the buyer approves the transaction on
                     // paypal.com also captures the funds from the transaction
                     onApprove = {(data, actions) => {
                       return actions.order.capture().then(function(details) {
-                        alert("The transaction was completed ");
+                      //  alert("The transaction was completed ");
                         let transaction = new Transaction(details, tot_price-shipping_cost, item_ids, num_items);
                         console.log("transaction obj ", transaction);
-                        
+                        model.updateDatabase();
                         model.updatePopularity();
                         model.updateTransactions(transaction);
                         model.emptyCart();
                         self.onApprove();
-                        
+
                         // call your server to save the transaction
                         return fetch("/paypal-transaction-complete", {
                           method: "post",
@@ -144,22 +154,23 @@ class Cartview extends Component {
                         });
                       });
                     }}
-                    onError = {(error) =>
-                      alert(error)}
-                    onCancel = {() => 
-                      alert("The transaction was cancelled ")}
+                  //  onError = {(error) =>
+                    //  alert(error)}
+                    // onCancel = {() =>
+                    //   alert("The transaction was cancelled ")
+                    // }
                     options={{
                       clientId: "sb",
                       currency: "SEK",
                     }}
-                    
+
                   />: ""}
-               
-                </div> 
+
+                </div>
             </div>
-          }     
+          }
     </div>
-    
+
     );
   }
 }
