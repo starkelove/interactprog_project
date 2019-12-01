@@ -175,6 +175,34 @@ class Model extends ObservableModel{
     this.printDatabase();
   }
 
+  /*adjustAmount(type, id) {
+    if(id in this._cart) {
+      switch (type) {
+        case "add":
+          let item = this.getItem(id)
+          .then((item) => {
+            this.addToCart(item);
+          })
+          .err(console.log);
+
+          break;
+        case "remove":
+          if(this._cart[id].amount == 0) {
+            break;
+          }
+          this._cart[id].amount--;
+          break;
+        default:
+        console.log("didn't pass add or remove as parameter");
+      }
+    }
+    else {
+      console.log("error, this item is not in the cart");
+    }
+    window.localStorage.setItem('cart', JSON.stringify(this._cart));
+    this.notifyObservers();
+  }*/
+
   addToCart(item) {
     this.assert(item != undefined);
     let approved = this.enoughInStorage(item);
