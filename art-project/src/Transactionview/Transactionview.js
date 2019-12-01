@@ -13,7 +13,8 @@ class Transactionview extends Component {
   
           this.state = {
               status: "LOADING",
-              transactions: []
+              transactions: [],
+              items: []
           };
       }
   
@@ -33,6 +34,20 @@ class Transactionview extends Component {
         this.setState({
           status: "LOADED",
           transactions: results,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          status: "ERROR"
+        });
+      }); 
+
+      modelInstance
+      .getAllItems()
+      .then(results => {
+        this.setState({
+          status: "LOADED",
+          items: results,
         });
       })
       .catch(() => {
@@ -63,18 +78,28 @@ class Transactionview extends Component {
         title = "Item Title";
           description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
           let items = this.state.transactions;
+          let dbItems = this.state.items;
+          console.log(dbItems.thumbelina);
           transactionsList = items.map(item => (
               
             <div className="row">
                 <React.Fragment>
+                  <div className="row">
+
                     <p>
-                        
-                        {item.transactions.buyer}
-                        {item.transactions.date}
-                        {item.transactions.email_address}
-                        
-                        
+                      {item.transactions.buyer}
                     </p>
+                    <p>
+                      {item.transactions.date}
+                    </p>
+                    <p>
+                      {item.transactions.email_address}
+                    </p>
+
+                  </div>
+                        
+                        
+
                 </React.Fragment>
             </div>
           ));
