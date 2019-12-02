@@ -20,7 +20,6 @@ class Detailview extends Component {
             status: "LOADING",
             selectedProduct: productId,
         };
-        console.log("Stieg geil");
         this.handleChangeImg = this.handleChangeImg.bind(this);
     }
 
@@ -31,9 +30,6 @@ class Detailview extends Component {
   }
 
   handleChangeImg({ target }) {
-    //history.pushState(this.state);
-    console.log(target.parentNode.id);
-    console.log(this.state.selectedProduct);
     this.state = {
       selectedProduct: target.parentNode.id,
       status: "LOADING",
@@ -43,7 +39,6 @@ class Detailview extends Component {
       [target.selectedProduct]: target.parentNode.id,
       status: "LOADING",
     });
-    console.log(this.state.selectedProduct);
     this.update();
   }
 
@@ -57,7 +52,6 @@ class Detailview extends Component {
   // component is actually shown to the user (mounted to DOM)
   // that's a good place to call the API and get the data
   componentDidMount() {
-    console.log(this.state.selectedProduct);
 
     base.bindToState(`products/${this.state.selectedProduct}`, {
       context: this,
@@ -78,8 +72,6 @@ class Detailview extends Component {
         status: "LOADED",
         item: result
       });
-      console.log("Here is result");
-      console.log(this.state.item);
     })
     .catch(() => {
       this.setState({
@@ -115,8 +107,6 @@ class Detailview extends Component {
         status: "LOADED",
         item: result
       });
-      console.log("Here is result");
-      console.log(this.state.item);
     })
     .catch(() => {
       this.setState({
@@ -141,8 +131,6 @@ class Detailview extends Component {
       selectedProduct: id,
       item: "",
     });
-    console.log("Should update state to ", id);
-    console.log("Updated state to", this.state.selectedProduct);
     this.update();
   }
 
@@ -171,10 +159,7 @@ class Detailview extends Component {
         let arr = productId.split("/")
         productId = arr[arr.length-1]
         if(this.state.selectedProduct != productId){
-          console.log("this.state.selectedProduct", this.state.selectedProduct);
-          console.log("productId", productId);
           this.onWrongState(productId);
-          //break;
         }
         title = this.state.item.name;
         description = this.state.item.description;
@@ -191,9 +176,6 @@ class Detailview extends Component {
         if(this.state.recently_bought != undefined) {
           let bought = this.state.recently_bought.filter(item => item.id !== this.state.selectedProduct);
           let three_latest = bought.splice(0, 3);
-
-          console.log("three latest bought items");
-          console.log( Object.keys(three_latest).forEach(key => console.log("key " + three_latest[key].id)))
 
           recently_bought = three_latest.map(item => (
             <React.Fragment key={item.id}>
