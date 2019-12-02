@@ -98,7 +98,7 @@ class Cartview extends Component {
     if(num_items === 0) {
       shoppingList = "You have no items in your cart"
     }
-
+    
     return (
      <div className="Cartview">
           {this.state.approved ? <Confirmview/> :
@@ -141,6 +141,7 @@ class Cartview extends Component {
                         console.log("transaction obj ", transaction);
                         model.updateDatabase();
                         model.updatePopularity();
+                        model.updateBoughtTime();
                         model.emptyCart();
                         self.onApprove();
 
