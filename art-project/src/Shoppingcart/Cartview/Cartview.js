@@ -137,7 +137,7 @@ class Cartview extends Component {
                     // paypal.com also captures the funds from the transaction
                     onApprove = {(data, actions) => {
                       return actions.order.capture().then(function(details) {
-                      //  alert("The transaction was completed ");
+                        alert("The transaction was completed ");
                         let transaction = new Transaction(details, tot_price-shipping_cost, item_ids, num_items);
                         console.log("transaction obj ", transaction);
                         model.updateDatabase();
@@ -155,11 +155,10 @@ class Cartview extends Component {
                         });
                       });
                     }}
-                  //  onError = {(error) =>
-                    //  alert(error)}
-                    // onCancel = {() =>
-                    //   alert("The transaction was cancelled ")
-                    // }
+                    onError = {(error) =>
+                      alert(error)}
+                    onCancel = {() =>
+                      alert("The transaction was cancelled ")}
                     options={{
                       clientId: "sb",
                       currency: "SEK",

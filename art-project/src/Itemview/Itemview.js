@@ -1,19 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "./ItemView.css";
-import { base } from '../base'
+import "./Itemview.css";
 import modelInstance from "../Data/Model";
-import imageHandler from "../Data/Imagehandler";
-import thumbelina from "../imgs/thumbelina/thumbelina1.jpg";
-import missar from "../imgs/missar/missar1.png";
-import praguestatues from "../imgs/praguestatues/praguestatues1.png";
-import model from "../Data/Model";
 import ImageFadeIn from 'react-image-fade-in';
 import FadeIn from 'react-fade-in';
 
 /*import loadImages from "./Images";*/
 
-class ItemView extends Component {
+class Itemview extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -100,4 +94,4 @@ class ItemView extends Component {
 }
 
 const link = "../imgs/";
-export default ItemView;
+export default Itemview;
