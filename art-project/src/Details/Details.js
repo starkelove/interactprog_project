@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "./Details.css";
 import Topview from "../Topview/Topview";
 import Detailsview from "./Detailsview/Detailsview";

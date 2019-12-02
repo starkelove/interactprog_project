@@ -4,6 +4,8 @@ import {PayPalButton} from "react-paypal-button-v2"
 import model from "../../Data/Model";
 import Confirmview from "./Confirmview";
 import {Transaction} from "../../Data/Transaction";
+import { Link } from "react-router-dom";
+import FadeIn from 'react-fade-in';
 
 class Cartview extends Component {
   constructor(props) {
@@ -17,7 +19,8 @@ class Cartview extends Component {
   }
 
   handleDecrease = (event) => {
-    let itemId = event.target.parentNode.id;
+    let itemId = event.target.parentNode.parentNode.id;
+    console.log(event.target.parentNode.parentNode.id);
     model.getItem(itemId)
     .then((item) => {
       model.removeFromCart(item)
@@ -25,7 +28,7 @@ class Cartview extends Component {
   }
 
   handleIncrease = (event) => {
-    let itemId = event.target.parentNode.id;
+    let itemId = event.target.parentNode.parentNode.id;
     model.getItem(itemId)
     .then((item) => {
       model.addToCart(item)
@@ -33,7 +36,7 @@ class Cartview extends Component {
   }
 
   handleRemoveAll = (event) => {
-    let itemId = event.target.parentNode.id;
+    let itemId = event.target.parentNode.parentNode.id;
     model.getItem(itemId)
     .then((item) => {
       model.removeAll(item)
@@ -75,6 +78,7 @@ class Cartview extends Component {
     var self = this;
 
     Object.keys(cart)
+
     .filter((key) => {
       return cart[key].amount > 0
     })
@@ -103,13 +107,16 @@ class Cartview extends Component {
     
     return (
      <div className="Cartview">
+       <FadeIn>
           {this.state.approved ? <Confirmview/> :
             <div className="payment">
 
                 <div className="cart">
+
                 <div className="row justify-content-center">
                     <h3>Your Shopping Cart</h3>
                     </div>
+
                     {shoppingList}
                 </div>
                 <div className="row justify-content-center">
@@ -122,7 +129,7 @@ class Cartview extends Component {
                     // sets up the details of the transaction
                     createOrder={(data, actions) => {
                       let outOfStock = model.enoughItemsInStorage();
-                      if(outOfStock.length == 0) {
+                      if(outOfStock.length === 0) {
                         return actions.order.create({
                           "purchase_units": [{
                               "description": description,
@@ -149,6 +156,7 @@ class Cartview extends Component {
                         model.updateDatabase();
                         model.updatePopularity();
                         model.updateBoughtTime();
+                        model.updateTransactions(transaction);
                         model.emptyCart();
                         self.onApprove();
 
@@ -171,10 +179,13 @@ class Cartview extends Component {
                     }}
 
                   />: ""}
+
                 </div>
+
                 </div>
             </div>
           }
+      </FadeIn>
     </div>
 
     );

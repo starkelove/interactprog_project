@@ -1,9 +1,8 @@
 import { base } from '../base'
 import ObservableModel from "./ObservableModel";
 
-class Model extends ObservableModel{
+class Model {
   constructor() {
-    super();
     this._observers = [];
     this._items = [];
     this._cart = this.setCart();
@@ -11,11 +10,8 @@ class Model extends ObservableModel{
   }
 
   setCart() {
-    console.log("setCart");
     let cart = window.localStorage.getItem('cart');
-    console.log(cart);
-    if(cart != undefined && cart != null && cart != []) {
-      console.log("not undefined, null or []", cart)
+    if(cart != undefined || null) {
       return JSON.parse(cart);
     }
     else {
@@ -25,7 +21,7 @@ class Model extends ObservableModel{
 
   emptyCart() {
     window.localStorage.removeItem('cart');
-    this._cart = {};
+    this._cart = []
     this._num_items = 0;
     this.notifyObservers();
   }
@@ -35,7 +31,6 @@ class Model extends ObservableModel{
     if(this._cart !== undefined) {
       Object.keys(this._cart).forEach(key => {
         num_items += this._cart[key].amount;
-        console.log(this._cart[key].amount)
       });
     } else {
       num_items = 0;
@@ -88,6 +83,7 @@ class Model extends ObservableModel{
     poplist.sort(function(a, b) {
       return b.popularity - a.popularity;
     })
+
     return poplist;
   }
 
@@ -131,7 +127,12 @@ class Model extends ObservableModel{
     });
     return outOfStock;
   }
+  enoughInStorage(Item) {
+    if(Item.quant > 0) {
+      return true;
+    }
 
+}
   add(item) {
     if(item.id in this._cart) {
       this._cart[item.id].item = item;
@@ -188,29 +189,94 @@ class Model extends ObservableModel{
     });
   }
 
+  updateTransactions(transactions){
+    base.push('transactions/',{
+      data: {transactions},
+    }
+    )
+  }
+
+  async fetchTransactions(){
+    let result = await base.fetch('transactions', {
+      context: this,
+      asArray: true
+    }).then(data => {
+      return data;
+    }).catch(error => {
+      //handle error
+    })
+
+    this.items = await result;
+
+    return this.items;
+  
+  }
+
   removeAll(item) {
-    if(item.id in this._cart) {
-      this._num_items -=  this._cart[item.id].amount;
-      this._cart[item.id].amount = 0;
+
+    base.update(`products/${item.id}`, {
+      data: {
+      quant: item.quant + this._cart[item.id].amount
+      }
+    }).then(() => {
+      if(item.id in this._cart) {
+        this._num_items -=  this._cart[item.id].amount;
+        this._cart[item.id].amount = 0;
+      }
+      else {
+        console.log("error, this item is not in the cart");
+      }
+      window.localStorage.setItem('cart', JSON.stringify(this._cart));
+      this.notifyObservers();
+
+    }).catch(err => {
+      console.log("error");
+    });
+    this.printDatabase();
+  }
+
+  adjustAmount(type, id) {
+    if(id in this._cart) {
+      switch (type) {
+        case "add":
+          let item = this.getItem(id)
+          .then((item) => {
+            this.addToCart(item);
+          })
+          .err(console.log);
+
+          break;
+        case "remove":
+          if(this._cart[id].amount == 0) {
+            break;
+          }
+          this._cart[id].amount--;
+          break;
+        default:
+        console.log("didn't pass add or remove as parameter");
+      }
     }
     else {
       console.log("error, this item is not in the cart");
     }
     window.localStorage.setItem('cart', JSON.stringify(this._cart));
     this.notifyObservers();
-    this.printDatabase();
   }
 
   addToCart(item) {
     this.assert(item != undefined);
     let approved = this.enoughInStorage(item);
     if(approved) {
-      this.add(item);
-    //  alert(item.name + " is added to the cart");
-      console.log(this._cart);
-    }
-    else {
-    //  alert(item.name + " could not be added to the cart");
+      base.update(`products/${item.id}`, {
+        data: {
+        quant: item.quant - 1
+        }
+      }
+      ).then(() => {
+        this.add(item);
+      }).catch(err => {
+        console.log("error");
+      });
     }
     this.printDatabase();
   }
@@ -220,38 +286,20 @@ class Model extends ObservableModel{
     if(this._cart[item.id].amount == 0) {
       return;
     }
-    this.remove(item);
-    console.log(this._cart);
-    this.printDatabase();
-    }
+    base.update(`products/${item.id}`, {
+      data: {
+      quant: item.quant + 1
+      }
+    }).then(() => {
+      this.remove(item);
 
-    async updateDatabase() {
-      Object.keys(this._cart).forEach(key => {
 
-        console.log("quantity: " + this._cart[key].item.quant + ", amount: " + this._cart[key].amount);
-        this.assert((this._cart[key].item.quant - this._cart[key].amount) >= 0)
-        base.update(`products/${key}`, {
-          data: {
-          quant: this._cart[key].item.quant - this._cart[key].amount
-          }
-        }).catch(err => {
-          console.log("error");
-        });
-
+    }).catch(err => {
+      console.log("error");
     });
-    console.log("after:");
     this.printDatabase();
-
     }
 
-    printDatabase() {
-      this.getAllItems()
-      .then((items) => {
-        items.forEach(item => {
-          console.log("id: " + item.id + " quant: " + item.quant);
-        });
-      })
-    }
 
   async getAllItems() {
     let result = await base.fetch('products', {
@@ -264,6 +312,7 @@ class Model extends ObservableModel{
     })
 
     this.items = await result;
+
     return this.items;
   }
 
@@ -279,9 +328,18 @@ class Model extends ObservableModel{
     return result;
   }
 
+  printDatabase() {
+    this.getAllItems()
+    .then((items) => {
+      items.forEach(item => {
+        console.log("id: " + item.id + " quant: " + item.quant);
+      });
+    })
+  }
+
   assert(condition, message) {
     if (!condition) {
-        throw message || "condition is " + condition;
+        throw message || "Assertion failed";
     }
   }
 }
