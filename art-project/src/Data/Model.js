@@ -253,6 +253,15 @@ class Model extends ObservableModel{
       })
     }
 
+
+    updateTransactions(transactions){
+      base.push('transactions/',{
+        data: {transactions},
+      }
+      )
+    }
+
+
     async fetchTransactions(){
       let result = await base.fetch('transactions', {
         context: this,

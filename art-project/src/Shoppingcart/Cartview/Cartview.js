@@ -100,7 +100,9 @@ class Cartview extends Component {
 
     num_items = model.getNumItems();
     if(num_items === 0) {
-      shoppingList = "You have no items in your cart"
+      shoppingList = <div className="row justify-content-center">
+        <p>You have no items in your cart</p>
+        </div>
     }
     
     return (
@@ -152,6 +154,7 @@ class Cartview extends Component {
                         model.updateDatabase();
                         model.updatePopularity();
                         model.updateBoughtTime();
+                        model.updateTransactions(transaction);
                         model.emptyCart();
                         self.onApprove();
 
