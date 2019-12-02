@@ -1,14 +1,16 @@
- @media screen and (max-width:600px){
-  .item {
-    display: block;
-    margin: auto;
-    overflow: auto;
-  }
-}
 
- .item {
+
+
+.item {
   font-size: 20px;
   margin: 10px;
+  width: 30%;
+}
+
+@media screen and (max-width:970px){
+  .item {
+    width: 80%;
+  }
 }
 
 .titlebar {
@@ -22,8 +24,6 @@
 }
 
 .cart {
-  margin-left: auto;
-  margin-right: auto;
   text-align: left;
 }
 

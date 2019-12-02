@@ -78,39 +78,24 @@ class Cartview extends Component {
     var self = this;
 
     Object.keys(cart)
-  .filter((key) => {
-    return cart[key].amount > 0
-  })
-  .forEach(key => {
-    tot_price += cart[key].amount*cart[key].item.price;
-    shoppingList.push(
-      <div className="row justify-content-center">
-        <div className="col-sm-2">
 
-      <div className="titlepush">
-       {cart[key].item.name}
-       </div>
-       </div>
-
-       <div className="col-sm-2">
-       <div className="titlepush">
-        <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
-       
-        <span className="item-name">{cart[key].amount}</span>
-        
-        <button onClick={this.handleIncrease} className="increase-btn"> + </button>
-        
-        <button onClick={this.handleRemoveAll} className="remove-btn"> X </button>
+    .filter((key) => {
+      return cart[key].amount > 0
+    })
+    .forEach(key => {
+      tot_price += cart[key].amount*cart[key].item.price;
+      shoppingList.push(
+        <div className="row justify-content-center">
+        <div id={cart[key].item.id} className="item" key={key}> {cart[key].item.name}
+          <button onClick={this.handleRemoveAll} className="remove-btn"> X </button>
+          <button onClick={this.handleIncrease} className="increase-btn"> + </button>
+          <span className="item-name">{cart[key].amount}</span>
+          <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
         </div>
         </div>
-      </div>
-
-
-    );
-    item_ids.push(cart[key].item.id);
-  });
-
-
+      );
+      item_ids.push(cart[key].item.id);
+    });
 
     tot_price += shipping_cost;
     description = "Shipping cost " + shipping_cost + " SEK";
@@ -125,15 +110,18 @@ class Cartview extends Component {
        <FadeIn>
           {this.state.approved ? <Confirmview/> :
             <div className="payment">
+
                 <div className="cart">
-                  <div className="row justify-content-center">
-                    <div className="titlebar">
+
+                <div className="row justify-content-center">
                     <h3>Your Shopping Cart</h3>
                     </div>
-                    </div>
+
                     {shoppingList}
                 </div>
+                <div className="row justify-content-center">
                 <div id="paypal-div">
+
                   {/* PayPalButton based on tutorial provided at
                   https://github.com/Luehang/react-paypal-button-v2.git */}
                   {num_items > 0 ?  <PayPalButton
@@ -191,9 +179,9 @@ class Cartview extends Component {
                     }}
 
                   />: ""}
-                        <Link to="/transactions">
-                    <p>Transaction history</p>
-                    </Link>
+
+                </div>
+
                 </div>
             </div>
           }
