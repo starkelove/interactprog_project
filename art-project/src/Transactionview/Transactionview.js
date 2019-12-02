@@ -84,22 +84,22 @@ class Transactionview extends Component {
                   <div className="row">
                     <div className="col">
                     <p>
-                      Name: {item.transactions.buyer}
+                      Name:<br></br> {item.transactions.buyer}
                     </p>
                     </div>
                     <div className="col">
                     <p>
-                      Date: {item.transactions.date}
+                      Date: <br></br> {item.transactions.date}
                     </p>
                     </div>
                     <div className="col">
                     <p>
-                      Email: {item.transactions.email_address}
+                      Email:<br></br> {item.transactions.email_address}
                     </p>
                     </div>
                     <div className="col">
                     <p>
-                      Price: {item.transactions.price}
+                      Price: <br></br>{item.transactions.price}
                     </p>
                     </div>
                     <div className="col">
