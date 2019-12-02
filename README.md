@@ -7,7 +7,7 @@ List of features present:
 * **Fetching** all items from our firebase database and **presenting** them on our mainpage
 * The items on the mainpage are **sorted by popularity** and this popularity is updated each time items are bought
 * **Detailed view** of every item featuring a picture gallery, description, price and an ability to put the item in your cart
-* Items can only be put in cart if they are **in stock**, otherwise they will be shown as sold out
+* Items can only be put in cart if they are **in stock**, otherwise they will be shown as sold out (see the Dúrer book for example)
 * On the the item pages there is also a row showing of the three **latest purchases** made to the store
 * **Shopping cart** which can add or remove items easily (depending on how many are in stock)
 * **PayPal checkout** which checks out the items that were bought (in Paypal sandbox so no money is transferred)
