@@ -4,6 +4,8 @@ import {PayPalButton} from "react-paypal-button-v2"
 import model from "../../Data/Model";
 import Confirmview from "./Confirmview";
 import {Transaction} from "../../Data/Transaction";
+import { Link } from "react-router-dom";
+import FadeIn from 'react-fade-in';
 
 class Cartview extends Component {
   constructor(props) {
@@ -17,7 +19,8 @@ class Cartview extends Component {
   }
 
   handleDecrease = (event) => {
-    let itemId = event.target.parentNode.id;
+    let itemId = event.target.parentNode.parentNode.id;
+    console.log(event.target.parentNode.parentNode.id);
     model.getItem(itemId)
     .then((item) => {
       model.removeFromCart(item)
@@ -25,7 +28,7 @@ class Cartview extends Component {
   }
 
   handleIncrease = (event) => {
-    let itemId = event.target.parentNode.id;
+    let itemId = event.target.parentNode.parentNode.id;
     model.getItem(itemId)
     .then((item) => {
       model.addToCart(item)
@@ -33,7 +36,7 @@ class Cartview extends Component {
   }
 
   handleRemoveAll = (event) => {
-    let itemId = event.target.parentNode.id;
+    let itemId = event.target.parentNode.parentNode.id;
     model.getItem(itemId)
     .then((item) => {
       model.removeAll(item)
@@ -75,21 +78,27 @@ class Cartview extends Component {
     var self = this;
 
     Object.keys(cart)
-    .filter((key) => {
-      return cart[key].amount > 0
-    })
-    .forEach(key => {
-      tot_price += cart[key].amount*cart[key].item.price;
-      shoppingList.push(
-        <div id={cart[key].item.id} className="item" key={key}> {cart[key].item.name}
-          <button onClick={this.handleRemoveAll} className="remove-btn"> X </button>
-          <button onClick={this.handleIncrease} className="increase-btn"> + </button>
-          <span className="item-name">{cart[key].amount}</span>
-          <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
-        </div>
-      );
-      item_ids.push(cart[key].item.id);
-    });
+  .filter((key) => {
+    return cart[key].amount > 0
+  })
+  .forEach(key => {
+    tot_price += cart[key].amount*cart[key].item.price;
+    shoppingList.push(
+
+      <div id={cart[key].item.id} className="item" key={key}>
+       {cart[key].item.name}
+       <div className="adjust-btns">
+        <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
+        <span className="item-name">{cart[key].amount}</span>
+        <button onClick={this.handleIncrease} className="increase-btn"> + </button>
+        <button onClick={this.handleRemoveAll} className="remove-btn"> X </button>
+      </div>
+      </div>
+    );
+    item_ids.push(cart[key].item.id);
+  });
+
+
 
     tot_price += shipping_cost;
     description = "Shipping cost " + shipping_cost + " SEK";
@@ -101,6 +110,7 @@ class Cartview extends Component {
     
     return (
      <div className="Cartview">
+       <FadeIn>
           {this.state.approved ? <Confirmview/> :
             <div className="payment">
                 <div className="cart">
@@ -115,7 +125,7 @@ class Cartview extends Component {
                     // sets up the details of the transaction
                     createOrder={(data, actions) => {
                       let outOfStock = model.enoughItemsInStorage();
-                      if(outOfStock.length == 0) {
+                      if(outOfStock.length === 0) {
                         return actions.order.create({
                           "purchase_units": [{
                               "description": description,
@@ -142,6 +152,7 @@ class Cartview extends Component {
                         model.updateDatabase();
                         model.updatePopularity();
                         model.updateBoughtTime();
+                        model.updateTransactions(transaction);
                         model.emptyCart();
                         self.onApprove();
 
@@ -164,10 +175,13 @@ class Cartview extends Component {
                     }}
 
                   />: ""}
-
+                        <Link to="/transactions">
+                    <p>Transaction history</p>
+                    </Link>
                 </div>
             </div>
           }
+      </FadeIn>
     </div>
 
     );
