@@ -162,6 +162,29 @@ class Model extends ObservableModel{
 
   }
 
+  updateTransactions(transactions){
+    base.push('transactions/',{
+      data: {transactions},
+    }
+    )
+  }
+
+  async fetchTransactions(){
+    let result = await base.fetch('transactions', {
+      context: this,
+      asArray: true
+    }).then(data => {
+      return data;
+    }).catch(error => {
+      //handle error
+    })
+
+    this.items = await result;
+
+    return this.items;
+  
+  }
+
   removeAll(item) {
     if(item.id in this._cart) {
       this._num_items -=  this._cart[item.id].amount;

@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import Welcome from "./Welcome/Welcome";
 import Topview from "./Topview/Topview";
 import Shoppingcart from "./Shoppingcart/Shoppingcart";
+import Transactionview from "./Transactionview/Transactionview";
 import Details from "./Details/Details";
 import Main from "./Main/Main";
 import About from "./About/About";
@@ -39,6 +40,10 @@ class App extends Component {
             render={() => <Main model={modelInstance}/>}
           />
           <Route exact path="/about" component={About}/>
+          <Route
+            path="/transactions"
+            render={() => <Transactionview model={modelInstance}/>}
+          />
         </header>
       </div>
     );

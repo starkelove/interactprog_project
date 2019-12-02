@@ -4,6 +4,7 @@ import {PayPalButton} from "react-paypal-button-v2"
 import model from "../../Data/Model";
 import Confirmview from "./Confirmview";
 import {Transaction} from "../../Data/Transaction";
+import { Link } from "react-router-dom";
 
 class Cartview extends Component {
   constructor(props) {
@@ -141,6 +142,7 @@ class Cartview extends Component {
                         console.log("transaction obj ", transaction);
                         model.updateDatabase();
                         model.updatePopularity();
+                        model.updateTransactions(transaction);
                         model.emptyCart();
                         self.onApprove();
 
@@ -163,10 +165,13 @@ class Cartview extends Component {
                     }}
 
                   />: ""}
-
+                        <Link to="/transactions">
+                    <p>Transaction history</p>
+                    </Link>
                 </div>
             </div>
           }
+
     </div>
 
     );
