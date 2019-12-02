@@ -9,6 +9,7 @@ import About from "./About/About";
 import modelInstance from "./Data/Model";
 import './App.css';
 import { base } from "./base";
+import Transactionview from "./Transactionview/Transactionview";
 
 
 class App extends Component {
@@ -37,6 +38,10 @@ class App extends Component {
           <Route
             path="/main"
             render={() => <Main model={modelInstance}/>}
+          />
+          <Route
+            path="/transactions"
+            render={() => <Transactionview model={modelInstance}/>}
           />
           <Route exact path="/about" component={About}/>
         </header>

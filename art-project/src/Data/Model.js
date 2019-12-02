@@ -253,6 +253,22 @@ class Model extends ObservableModel{
       })
     }
 
+    async fetchTransactions(){
+      let result = await base.fetch('transactions', {
+        context: this,
+        asArray: true
+      }).then(data => {
+        return data;
+      }).catch(error => {
+        //handle error
+      })
+  
+      this.items = await result;
+  
+      return this.items;
+    
+    }
+
   async getAllItems() {
     let result = await base.fetch('products', {
       context: this,

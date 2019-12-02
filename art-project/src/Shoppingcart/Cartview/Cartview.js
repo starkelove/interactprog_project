@@ -4,6 +4,8 @@ import {PayPalButton} from "react-paypal-button-v2"
 import model from "../../Data/Model";
 import Confirmview from "./Confirmview";
 import {Transaction} from "../../Data/Transaction";
+import FadeIn from 'react-fade-in';
+import { Link } from "react-router-dom";
 
 class Cartview extends Component {
   constructor(props) {
@@ -103,6 +105,7 @@ class Cartview extends Component {
     
     return (
      <div className="Cartview">
+       <FadeIn>
           {this.state.approved ? <Confirmview/> :
             <div className="payment">
 
@@ -172,9 +175,16 @@ class Cartview extends Component {
 
                   />: ""}
                 </div>
+
+                </div>
+                <div className="row justify-content-center">
+                <Link to="/transactions">
+                    <p>Transaction history</p>
+                    </Link>
                 </div>
             </div>
           }
+          </FadeIn>
     </div>
 
     );
