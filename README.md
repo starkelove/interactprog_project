@@ -2,9 +2,8 @@
 Repository for Project group 3 in the Interactive Programming course (DH2642). This project is a website made for Love's fiancee Maria who will sell her art-prints through it. It will include list of items, detailview of every item, an ability to put items in a shopping cart, a view of the shopping cart and finally a checkout of the items through PayPal.
 
 # What we have done
-We have set up the base design for the site with its corresponding links and flow. Firebase database is created but not utilized yet. Paypal checkout in sandbox mode is implemented. A basic model is created which will be used to handle the various items and if they are in stock or not.
-
 List of features present:
+* Firebase database with info about all the items and corresponding pictures
 * Fetching all items from our firebase database and presentiing them on our mainpage
 * The items on the mainpage are sorted by popularity and this popularity is updated each time items are bought
 * Detailed view of every item featuring a picture gallery, description, price and an ability to put the item in your cart
