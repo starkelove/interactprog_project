@@ -81,7 +81,7 @@ class Transactionview extends Component {
           
           transactionsList = items.slice(0).reverse().map(item => (
               
-
+            <FadeIn>
                 <React.Fragment>
                   <div className="row">
                     <div className="col">
@@ -114,6 +114,7 @@ class Transactionview extends Component {
                     </div>
                   </div>
                 </React.Fragment>
+                </FadeIn>
             
           ));
           break;
@@ -132,6 +133,7 @@ class Transactionview extends Component {
           <div className="col">
             <h3>Transaction history</h3>
         {transactionsList}
+        
         </div>
         </div>
         </div>

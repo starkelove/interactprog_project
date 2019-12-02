@@ -5,6 +5,7 @@ import model from "../../Data/Model";
 import Confirmview from "./Confirmview";
 import {Transaction} from "../../Data/Transaction";
 import { Link } from "react-router-dom";
+import FadeIn from 'react-fade-in';
 
 class Cartview extends Component {
   constructor(props) {
@@ -109,6 +110,7 @@ class Cartview extends Component {
 
     return (
      <div className="Cartview">
+       <FadeIn>
           {this.state.approved ? <Confirmview/> :
             <div className="payment">
                 <div className="cart">
@@ -178,7 +180,7 @@ class Cartview extends Component {
                 </div>
             </div>
           }
-
+      </FadeIn>
     </div>
 
     );
