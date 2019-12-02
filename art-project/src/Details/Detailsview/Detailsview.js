@@ -7,8 +7,6 @@ import ImageGallery from 'react-image-gallery';
 import FadeIn from 'react-fade-in';
 import ImageFadeIn from 'react-image-fade-in';
 
-
-
 class Detailview extends Component {
 
   constructor(props) {
@@ -40,8 +38,6 @@ class Detailview extends Component {
       [target.parentNode.selectedProduct]: target.parentNode.id,
       [target.selectedProduct]: target.parentNode.id,
       status: "LOADING",
-
-
     });
     this.update();
   }
@@ -81,6 +77,21 @@ class Detailview extends Component {
         status: "ERROR"
       });
     });
+
+    model
+    .getAllItems()
+    .then(items => model.returnRecentlyBought(items, this.state.selectedProduct))
+    .then(result => {
+      this.setState({
+        recently_bought: result
+      });
+    })
+    .catch(() => {
+      this.setState({
+        status: "ERROR"
+      });
+    });
+
   }
 
   update() {
@@ -122,7 +133,6 @@ class Detailview extends Component {
     this.update();
   }
 
-
   render() {
     // create variables
     let title = "";
@@ -130,7 +140,7 @@ class Detailview extends Component {
     let price = "";
     let image = "";
     let product = "";
-    let related = [];
+    let recently_bought = [];
     let images = [];
     let urladd = [];
     let btn = "";
@@ -154,7 +164,6 @@ class Detailview extends Component {
         description = this.state.item.description;
         price = this.state.item.price;
         image = this.state.item.url;
-        related = this.state.item.related;
         urladd = this.state.item.urladd;
 
         if(this.state.item.quant > 0) {
@@ -163,25 +172,26 @@ class Detailview extends Component {
           btn = <React.Fragment> <button id="add-to-chart-btn" className="btn btn-secondary">SOLD OUT</button> </React.Fragment>
         }
 
-        if(related !== undefined){
-          let arr = model.returnRelated(related);
-          related = arr.map(item => (
+        if(this.state.recently_bought != undefined) {
+          let bought = this.state.recently_bought.filter(item => item.id !== this.state.selectedProduct);
+          let three_latest = bought.splice(0, 3);
+
+          console.log("three latest bought items");
+          console.log( Object.keys(three_latest).forEach(key => console.log("key " + three_latest[key].id)))
+
+          recently_bought = three_latest.map(item => (
             <React.Fragment key={item.id}>
-            <div className="col-sm-2">
-            <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
-
-            <ImageFadeIn name={item.name} id={"images"} width={80} height={107} src={item.url} opacityTransition={1.5}/>
-
-            <FadeIn>
-            <p> {item.name} </p>
-            </FadeIn>
-            </Link>
-            </div>
+              <div className="col-sm-2">
+                <Link id={item.id} name="selectedImage" to={"/details/"+  item.id} onClick={ this.handleChangeImg }>
+                  <ImageFadeIn name={item.name} id={"images"} width={80} height={107} src={item.url} opacityTransition={1.5}/>
+                </Link>
+              </div>
             </React.Fragment>
           ));
-        }else{
-          related = "";
+        } else {
+          recently_bought = "";
         }
+
         images.push({
           original: image,
           thumbnail: image,
@@ -193,8 +203,6 @@ class Detailview extends Component {
               thumbnail: urladd[i],
             },)
           }
-
-
         }
 
         product = <React.Fragment>
@@ -211,13 +219,12 @@ class Detailview extends Component {
 
           <div id="price">
             <p> {price} SEK</p>
-            {/*<button id="add-to-chart-btn" className="btn btn-secondary" onClick={this.handleAdd}>Add to cart</button>*/}
             {btn}
           </div>
           <div className="row justify-content-center">
-            <p>Related products</p>
+            <p> Recently bought products</p>
             </div><div className="row justify-content-center">
-            {related}
+            {recently_bought}
           </div>
           </FadeIn>
         </div>

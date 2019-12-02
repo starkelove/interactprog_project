@@ -1,5 +1,5 @@
 import { base } from '../base'
-import { throwStatement } from '@babel/types';
+import ObservableModel from "./ObservableModel";
 
 class Model {
   constructor() {
@@ -87,6 +87,46 @@ class Model {
     return poplist;
   }
 
+  returnRecentlyBought(items, selectedProduct) {
+    let recently_bought = [];
+    let i = 0;
+
+    console.log("in recently bought ", selectedProduct)
+
+    //Go through object and add to array
+    Object.keys(items).forEach(key => {
+      recently_bought[i] = items[key];
+      i++;
+    });
+
+    //Sort array so that top results are present
+    recently_bought.sort(function(a, b) {
+      return b.boughttime - a.boughttime;
+    })
+
+    return recently_bought;
+  } 
+
+  enoughInStorage(item) {
+    if(((item.id in this._cart) && (item.quant > this._cart[item.id].amount)) || (!(item.id in this._cart) && item.quant > 0)) {
+        return true;
+    }
+  }
+
+  enoughItemsInStorage() {
+    let outOfStock = [];
+    Object.keys(this._cart).forEach(key => {
+      console.log("quantity: " + this._cart[key].item.quant + ", amount: " + this._cart[key].amount);
+      if(key == "hokusaiprint") {
+        this._cart[key].item.quant = 1;
+      }
+      if(this._cart[key].item.quant < this._cart[key].amount) {
+        this._cart[key].amount = this._cart[key].item.quant;
+        outOfStock.push(this._cart[key].item);
+      }
+    });
+    return outOfStock;
+  }
   enoughInStorage(Item) {
     if(Item.quant > 0) {
       return true;
@@ -122,24 +162,31 @@ class Model {
   async updatePopularity() {
     let ogList = this.getAllItems().then((list)=>{
       list.map(item =>{
-
-
         let temp = item.id;
-
         if(this._cart[temp] != undefined){
-
           base.update(`products/${temp}`, {
             data: {
             popularity: item.popularity + 1
             }
           })
         }
-
       })
-    }
+    });
+  }
 
-    );
-
+  async updateBoughtTime() {
+    Object.keys(this._cart).forEach(key => {
+      let object = this._cart[key]
+      if(object.amount > 0) {
+        let bought_time = new Date().getTime();
+        console.log("boughttime " + bought_time + " for item " + object.item.id);
+        base.update(`products/${object.item.id}`, {
+          data: {
+          boughttime: bought_time
+          }
+        })
+      }
+    });
   }
 
   updateTransactions(transactions){
