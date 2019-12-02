@@ -44,12 +44,12 @@ class Topview extends Component {
             <div className="row">
                 <div className="col">
                   <Link to="/about">
-                    <p>About</p>
+                    <p>ABOUT</p>
                     </Link>
                 </div>
                 <div className="col">
                     <Link to="/main">
-                      <h3>Art by Maria Fällström</h3>
+                      <h3>ART BY MARIA FÄLLSTRÖM</h3>
                     </Link>
                 </div>
                 <div className="col">

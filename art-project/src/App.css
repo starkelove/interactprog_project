@@ -1,14 +1,14 @@
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #f9f7f7;
   min-height: 100vh;
-  color: white;
+  color: black;
 }
 
 
  /* unvisited link */
  a:link {
-  color: #09d3ac;
+  color: black;
 }
 
 p {
@@ -18,17 +18,17 @@ p {
 
 /* visited link */
 a:visited {
-  color: #09d3ac;
+  color: black;
 }
 
 /* mouse over link */
 a:hover {
-  color: #116d5a;
+  color: #d88b8b;
 }
 
 /* selected link */
 a:active {
-  color: #116d5a;
+  color: #d88b8b;
 } 
 
 #App .row {
