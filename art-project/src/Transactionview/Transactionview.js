@@ -130,7 +130,7 @@ class Transactionview extends Component {
         <Topview/>
         <div className="row justify-content-center">
           <div className="col">
-            <h3>Transactions</h3>
+            <h3>Transaction history</h3>
         {transactionsList}
         </div>
         </div>
