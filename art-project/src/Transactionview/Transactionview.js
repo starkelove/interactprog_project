@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "./Transactionview.css";
 import Topview from "../Topview/Topview";
-import ImageFadeIn from 'react-image-fade-in';
 import FadeIn from 'react-fade-in';
 import modelInstance from "../Data/Model";
 

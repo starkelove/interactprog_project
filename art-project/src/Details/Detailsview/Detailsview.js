@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Detailsview.css";
-import Topview from "../../Topview/Topview";
 import model from "../../Data/Model";
 import { base } from '../../base'
 import ImageGallery from 'react-image-gallery';
 import FadeIn from 'react-fade-in';
 import ImageFadeIn from 'react-image-fade-in';
-import FontAwesome from 'react-fontawesome'
+
 
 
 class Detailview extends Component {
@@ -27,7 +26,7 @@ class Detailview extends Component {
     }
 
   handleAdd = () => {
-    if(this.state.item != undefined) {
+    if(this.state.item !== undefined) {
       model.addToCart(this.state.item);
     }
   }
@@ -148,7 +147,7 @@ class Detailview extends Component {
         let productId = window.location.href;
         let arr = productId.split("/")
         productId = arr[arr.length-1]
-        if(this.state.selectedProduct != productId){
+        if(this.state.selectedProduct !== productId){
           this.onWrongState(productId);
         }
         title = this.state.item.name;
@@ -164,7 +163,7 @@ class Detailview extends Component {
           btn = <React.Fragment> <button id="add-to-chart-btn" className="btn btn-secondary">SOLD OUT</button> </React.Fragment>
         }
 
-        if(related != undefined){
+        if(related !== undefined){
           let arr = model.returnRelated(related);
           related = arr.map(item => (
             <React.Fragment key={item.id}>
@@ -187,7 +186,7 @@ class Detailview extends Component {
           original: image,
           thumbnail: image,
         },)
-        if(urladd != undefined){
+        if(urladd !== undefined){
           for(let i = 0; i<urladd.length; i++){
             images.push({
               original: urladd[i],

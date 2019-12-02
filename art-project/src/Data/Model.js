@@ -10,11 +10,8 @@ class Model {
   }
 
   setCart() {
-    console.log("setCart");
     let cart = window.localStorage.getItem('cart');
-    console.log(cart);
     if(cart != undefined || null) {
-      console.log("null", cart)
       return JSON.parse(cart);
     }
     else {
@@ -34,7 +31,6 @@ class Model {
     if(this._cart !== undefined) {
       Object.keys(this._cart).forEach(key => {
         num_items += this._cart[key].amount;
-        console.log(this._cart[key].amount)
       });
     } else {
       num_items = 0;
@@ -231,7 +227,6 @@ class Model {
       }
       ).then(() => {
         this.add(item);
-        console.log(this._cart);
       }).catch(err => {
         console.log("error");
       });
@@ -251,7 +246,7 @@ class Model {
     }).then(() => {
       this.remove(item);
 
-      console.log(this._cart);
+
     }).catch(err => {
       console.log("error");
     });

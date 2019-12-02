@@ -125,7 +125,7 @@ class Cartview extends Component {
                     // sets up the details of the transaction
                     createOrder={(data, actions) => {
                       let outOfStock = model.enoughItemsInStorage();
-                      if(outOfStock.length == 0) {
+                      if(outOfStock.length === 0) {
                         return actions.order.create({
                           "purchase_units": [{
                               "description": description,
