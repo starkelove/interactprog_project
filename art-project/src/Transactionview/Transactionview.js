@@ -32,7 +32,7 @@ class Transactionview extends Component {
       .fetchTransactions()
       .then(results => {
         this.setState({
-          status: "LOADED",
+          status: "LOADING",
           transactions: results,
         });
       })
@@ -67,8 +67,7 @@ class Transactionview extends Component {
       let title = null;
       let description = null;
       let transactionsList = [];
-     // let list = modelInstance.fetchTransactions();
-      console.log(this.state.transactions);
+
   
       switch(this.state.status) {
         case "LOADING":
@@ -79,29 +78,43 @@ class Transactionview extends Component {
           description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
           let items = this.state.transactions;
           let dbItems = this.state.items;
-          console.log(dbItems.thumbelina);
-          transactionsList = items.map(item => (
+          
+          transactionsList = items.slice(0).reverse().map(item => (
               
-            <div className="row">
+
                 <React.Fragment>
                   <div className="row">
+                    <div className="col">
+                    <p>
+                      Name: {item.transactions.buyer}
+                    </p>
+                    </div>
+                    <div className="col">
+                    <p>
+                      Date: {item.transactions.date}
+                    </p>
+                    </div>
+                    <div className="col">
+                    <p>
+                      Email: {item.transactions.email_address}
+                    </p>
+                    </div>
+                    <div className="col">
+                    <p>
+                      Price: {item.transactions.price}
+                    </p>
+                    </div>
+                    <div className="col">
+                    <p>Items: 
+                    {item.transactions.item_ids.map(bought =>(
+                      <li>{dbItems.find(x => x.id === bought).name}</li>
 
-                    <p>
-                      {item.transactions.buyer}
+                    ))}
                     </p>
-                    <p>
-                      {item.transactions.date}
-                    </p>
-                    <p>
-                      {item.transactions.email_address}
-                    </p>
-
+                    </div>
                   </div>
-                        
-                        
-
                 </React.Fragment>
-            </div>
+            
           ));
           break;
   
@@ -116,7 +129,10 @@ class Transactionview extends Component {
         <div className="Transactions">
         <Topview/>
         <div className="row justify-content-center">
+          <div className="col">
+            <h3>Transactions</h3>
         {transactionsList}
+        </div>
         </div>
         </div>
   
