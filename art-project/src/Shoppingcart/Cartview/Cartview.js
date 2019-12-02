@@ -84,16 +84,28 @@ class Cartview extends Component {
   .forEach(key => {
     tot_price += cart[key].amount*cart[key].item.price;
     shoppingList.push(
+      <div className="row justify-content-center">
+        <div className="col-sm-2">
 
-      <div id={cart[key].item.id} className="item" key={key}>
+      <div className="titlepush">
        {cart[key].item.name}
-       <div className="adjust-btns">
+       </div>
+       </div>
+
+       <div className="col-sm-2">
+       <div className="titlepush">
         <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
+       
         <span className="item-name">{cart[key].amount}</span>
+        
         <button onClick={this.handleIncrease} className="increase-btn"> + </button>
+        
         <button onClick={this.handleRemoveAll} className="remove-btn"> X </button>
+        </div>
+        </div>
       </div>
-      </div>
+
+
     );
     item_ids.push(cart[key].item.id);
   });
@@ -114,7 +126,11 @@ class Cartview extends Component {
           {this.state.approved ? <Confirmview/> :
             <div className="payment">
                 <div className="cart">
+                  <div className="row justify-content-center">
+                    <div className="titlebar">
                     <h3>Your Shopping Cart</h3>
+                    </div>
+                    </div>
                     {shoppingList}
                 </div>
                 <div id="paypal-div">
