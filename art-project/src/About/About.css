@@ -1,8 +1,8 @@
-a:link {
+#linky:link {
     color: #d88b8b;
   }
 
   /* visited link */
-a:visited {
+#linky:visited {
     color: #d88b8b;
   }
