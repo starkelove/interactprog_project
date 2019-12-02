@@ -14,6 +14,13 @@ List of features present:
 * The stock of items is checked one last time before check-out and then the quantity of the item is updated in the database
 * Transaction history which shows the history of purchases made on the site with data from both the database and PayPal included
 
+# For teachers/peer-reviewers
+Teachers and/or peer-reviewers should send an email to lovest@kth.se to get PayPal credentials (if they want to test that functionality in the app).
+
+# How to setup
+* Clone project
+* Run npm install
+* Run npm start
 
 # Project file structure (short description/purpose of each file)
     .
