@@ -84,12 +84,15 @@ class Cartview extends Component {
       tot_price += cart[key].amount*cart[key].item.price;
       shoppingList.push(
         <div className="row justify-content-center">
-        <div id={cart[key].item.id} className="item" key={key}> {cart[key].item.name}
+        <div id={cart[key].item.id} className="item" key={key}> {cart[key].item.name + " - "}
+        {cart[key].item.price + " sek"}
           <button onClick={this.handleRemoveAll} className="remove-btn"> X </button>
           <button onClick={this.handleIncrease} className="increase-btn"> + </button>
           <span className="item-name">{cart[key].amount}</span>
           <button onClick={this.handleDecrease} className="decrease-btn"> - </button>
+          
         </div>
+
         </div>
       );
       item_ids.push(cart[key].item.id);
@@ -100,15 +103,7 @@ class Cartview extends Component {
 
     shoppingList.push(
       <React.Fragment>
-      <div className="row justify-content-center">
-
-        <div id="price" className="item" >
-        <p>Total price without shipping: {tot_price} sek</p>
-
-        </div>
-      </div>
-            <div className="row justify-content-center">
-
+          <div className="row justify-content-center">
             <div id="price" className="item" >
             <p>Total price with shipping: {tot_price+shipping_cost} sek ({shipping_cost} sek for shipping)</p>
     
