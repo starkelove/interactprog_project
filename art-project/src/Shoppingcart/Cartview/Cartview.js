@@ -95,8 +95,29 @@ class Cartview extends Component {
       item_ids.push(cart[key].item.id);
     });
 
-    tot_price += shipping_cost;
+    //tot_price += shipping_cost;
     description = "Shipping cost " + shipping_cost + " SEK";
+
+    shoppingList.push(
+      <React.Fragment>
+      <div className="row justify-content-center">
+
+        <div id="price" className="item" >
+        <p>Total price without shipping: {tot_price} sek</p>
+
+        </div>
+      </div>
+            <div className="row justify-content-center">
+
+            <div id="price" className="item" >
+            <p>Total price with shipping: {tot_price+shipping_cost} sek ({shipping_cost} sek for shipping)</p>
+    
+            </div>
+          </div>
+          </React.Fragment>
+    )
+
+
 
     num_items = model.getNumItems();
     if(num_items === 0) {

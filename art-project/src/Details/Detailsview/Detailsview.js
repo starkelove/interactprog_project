@@ -19,6 +19,7 @@ class Detailview extends Component {
         this.state = {
             status: "LOADING",
             selectedProduct: productId,
+            stock: "",
         };
         this.handleChangeImg = this.handleChangeImg.bind(this);
     }
@@ -172,6 +173,14 @@ class Detailview extends Component {
         } else {
           btn = <React.Fragment> <button id="add-to-chart-btn" className="btn btn-secondary">SOLD OUT</button> </React.Fragment>
         }
+        let stock = "";
+        if(this.state.item.quant > 10){
+          stock = <p>Availability: Over 10 in stock!</p>
+        }else if(this.state.item.quant < 10 && this.state.item.quant > 0){
+          stock = <p>Availability: Only {this.state.item.quant} in stock!</p>
+        }else{
+          stock = <p>Availability: Out of stock!</p>
+        }
 
         if(this.state.recently_bought != undefined) {
           let bought = this.state.recently_bought.filter(item => item.id !== this.state.selectedProduct);
@@ -214,7 +223,9 @@ class Detailview extends Component {
           <FadeIn>
           <h1>{title}</h1>
           <p>{description}</p>
-
+          <div id="stock">
+            {stock}
+          </div>
           <div id="price">
             <p> {price} SEK</p>
             {btn}
