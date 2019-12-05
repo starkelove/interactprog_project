@@ -93,5 +93,5 @@ class Itemview extends Component {
     }
 }
 
-const link = "../imgs/";
+
 export default Itemview;
